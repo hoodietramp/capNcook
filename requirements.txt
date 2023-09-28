@@ -1,0 +1,7 @@
+beautifulsoup4==4.12.2
+Flask==2.2.2
+Flask_Caching==2.0.2
+python-dotenv==1.0.0
+Requests==2.31.0
+termcolor==1.1.0
+tqdm==4.64.1

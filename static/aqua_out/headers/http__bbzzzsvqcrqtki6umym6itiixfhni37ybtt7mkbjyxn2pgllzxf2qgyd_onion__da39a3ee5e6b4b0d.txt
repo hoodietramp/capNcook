@@ -1,0 +1,13 @@
+200 OK
+Server: nginx
+Date: Wed, 27 Sep 2023 10:33:40 GMT
+Content-Type: text/html; charset=utf-8
+X-Powered-By: PHP/7.4.33
+X-Content-Type-Options: nosniff
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+X-Frame-Options: SAMEORIGIN
+Retry-Count: 0
+Cache-Control: private, no-cache, max-age=0
+Last-Modified: Wed, 27 Sep 2023 10:33:39 GMT
+Vary: Accept-Encoding
+Set-Cookie: xf_csrf=sQ4-Y33Ft2ewcaYy; path=/ xf_session=q4glzE5AUsfqb4NfZZ1D0hFMSENFy6f-; path=/; HttpOnly

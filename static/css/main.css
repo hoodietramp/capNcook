@@ -1,0 +1,421 @@
+@font-face {
+    font-family: 'Proto Mono';
+    src: url('/static/fonts/Proto Mono Regular.ttf') format('truetype');
+    font-weight: 700;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rebeccapurple;
+    font-family: "Proto Mono", monospace;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    background-color: rgb(0, 0, 0);
+    position: absolute;
+    top: 20px;
+    left: 50;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.navbar-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.navbar-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #e0ff05;
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-family: "Proto Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+}
+
+.navbar-button:hover {
+    background-color: #121212;
+    color: #fc7a00;
+    border-radius: 15px;
+}
+
+.tor-icon {
+    width: 45px;
+    height: 60px;
+    background-image: url('/static/images/tor_logo.png');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+    margin-top: -25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 130px;
+}
+
+
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 20px;
+    width: 400px;
+    height: 22px;
+    font-family: 'Ubuntu Mono', monospace;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: wheat;
+    font-weight: 100;
+    font-size: 1rem;
+    font-stretch: extra-expanded;
+    padding-right: 40px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input:hover {
+    background-color: #070707;
+    color: #ffd1d1;
+}
+
+.search-button {
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(207, 0, 249, 0.1);
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #e0ff05;
+}
+
+.search-button i {
+    font-size: 17px;
+}
+
+.search-button:hover {
+    color: #fc7a00;
+    background-color: #121212;
+    box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
+}
+
+
+.cube1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    transform-style: preserve-3d;
+    animation: huh 4s linear infinite alternate;
+}
+
+@keyframes huh {
+    0% {
+        transform: rotateX(-30deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(-30deg) rotateY(360deg);
+    }
+}
+
+.cube2 {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    transform-style: preserve-3d;
+    animation: huh 4s linear infinite alternate;
+}
+
+.cube1 div {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+}
+
+.cube1 div span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    transform: rotateY(calc(90deg * var(--cube))) translateZ(10px);
+    background: linear-gradient(#151515, rebeccapurple);
+}
+
+.cube2 div {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+}
+
+.cube2 div span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    transform: rotateY(calc(90deg * var(--cube))) translateZ(10px);
+    background: linear-gradient(#151515, rebeccapurple);
+}
+
+.glow {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 20px;
+    height: 20px;
+    background: #222;
+    transform: rotateX(90deg) translateZ(10px);
+}
+
+.glow::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    filter: blur(5px);
+    transform: translateZ(-40px);
+    box-shadow:
+        0 0 10px rgba(224, 255, 5, 0.5),
+        0 0 20px rgba(224, 255, 5, 0.5),
+        0 0 30px rgba(252, 122, 0, 0.7),
+        0 0 40px rgba(252, 122, 0, 0.7),
+        0 0 50px rgb(247, 97, 182);
+}
+
+.link-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    width: 50%;
+    position: fixed;
+    bottom: 20px;
+    left: 25%;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.link-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.link-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.link-container::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.link-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    width: 50%;
+    position: fixed;
+    bottom: 20px;
+    left: 25%;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+
+.link-container ul {
+    list-style: square inside;
+    margin: 0;
+    padding: 0;
+    color: #e0ff05;
+}
+
+.link-container li {
+    margin: 15px 0;
+}
+
+.link-container a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1.2rem;
+}
+
+.link-container a:hover {
+    font-family: 'Proto Mono', monospace;
+    font-size: 1rem;
+    color: #fc7a00;
+    text-shadow: 0 0 10px #fc7a00, 0 0 20px #fc7a00, 0 0 30px #121212, 0 0 40px #222;
+}
+
+.ip-box2 {
+    position: fixed;
+    top: 15px;
+    left: 60px;
+    background-color: rgba(0, 0, 0, .75);
+    color: palevioletred;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: "Proto Mono", monospace;
+    font-size: 0.9rem;
+}
+
+.ip-box1 {
+    position: fixed;
+    top: 15px;
+    right: 60px;
+    background-color: rgba(0, 0, 0, .75);
+    color: palevioletred;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: "Proto Mono", monospace;
+    font-size: 0.9rem;
+}
+
+.ip-address {
+     margin: 0;
+}
+
+.ip-address:hover{
+     color: #fc7a00;
+     cursor: wait;
+}
+
+.centered-container{
+    display: flex;
+    margin-left: 15px;
+    margin-bottom: 22px;
+
+}
+
+.square-refresh-button {
+    background-color: rgb(0,0,0);
+    opacity: 0.5;
+    border-radius: 5px;
+    border: none;
+    width: 35px; 
+    height: 35px; 
+    padding: 10 auto;
+    box-shadow: 0 0 10px #21325b, 0 0 20px #848884; 
+}
+
+.square-refresh-button i {
+    font-size: 17px;
+    color: #e0ff05;
+}
+
+.square-refresh-button:hover{
+    background-color: #36454F;
+    cursor: pointer;
+    opacity: 0.7;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s;
+}
+
+.square-refresh-button i:hover{
+    color: #fc7a00;
+}
+
+.message {
+    font-family: "Righteous", cursive;
+    font-size: 32px;
+    text-align: center;
+    color: #e0ff05;
+    top: 40%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden; /* Hide overflowing text */
+    animation: typewriter 4s steps(150) alternate infinite, reverseTypewriter 4s steps(120) alternate infinite;
+}
+
+.message:hover {
+    color: #fc7a00;
+    cursor: default;
+    opacity: 0.7;
+    transition: color 0.3s;
+}
+
+@keyframes typewriter {
+    0% {
+        width: 0;
+        opacity: 0.7;
+    }
+    25% {
+        width: 25%;
+        opacity: 0.7;
+    }
+    50% {
+        width: 50%;
+        opacity: 0.7;
+    }
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes reverseTypewriter {
+    0% {
+        width: 100%;
+        opacity: 1;
+    }
+    25% {
+        width: 75%;
+        opacity: 1;
+    }
+    50% {
+        width: 50%;
+        opacity: 1;
+    }
+    75% {
+        width: 25%;
+        opacity: 0.7;
+    }
+    100% {
+        width: 0;
+        opacity: 0;
+    }
+}
