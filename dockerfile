@@ -55,5 +55,4 @@ RUN chmod +x /startup.sh
 # Expose the port
 EXPOSE 5000
 
-ENTRYPOINT service tor start && bash
-RUN python3 app.py 
+ENTRYPOINT service tor start && python3 app.py && bash
