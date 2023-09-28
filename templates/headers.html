@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Screenshots & Headers</title>
+    <link href="https://fonts.googleapis.com/css?family=Righteous|Ubuntu+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Reset some default styles */
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* Define the font face for Proto Mono */
+        @font-face {
+            font-family: 'Proto Mono';
+            src: url('/static/fonts/Proto Mono Regular.ttf') format('truetype');
+            font-weight: 700;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7; /* Set background color to white */
+            font-family: 'Ubuntu Mono', monospace;
+            color: #21325b; /* Set text color to a readable color */
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: 2vw;
+            filter: brightness(100%);
+            color: #21325b;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .domain {
+            background-color: #E5E4E2;
+            border: 1px solid #848884;
+            box-shadow: 0 0 10px #21325b, 0 0 20px #848884;
+            border-radius: 7px;
+            margin: 10px;
+            padding: 10px;
+            width: 45%;
+            position: relative;
+            cursor: default;
+            overflow: hidden;
+        }
+
+        .domain:hover {
+            background-color: #FAF9F6;
+            border: 1px solid #000000;
+            box-shadow: 0 0 10px #848884, 0 0 20px #21325b;
+            transition: border 0.3s, box-shadow 0.5s;
+        }  
+
+        .domain img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        .server-headers {
+            margin-top: 10px;
+        }
+
+        h2 {
+            font-family: 'Ubuntu Mono', monospace;
+            color: #36454F;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .server-headers {
+            margin-top: 10px;
+        }
+
+        h3 {
+            font-family: 'Righteous', monospace;
+            color: #21325b;
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-weight: 250;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            color: #6082B6;
+        }
+
+        li {
+            color: #36454F;
+            font-family: 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            margin-bottom: 5px;
+            cursor: text;
+        }
+
+        .s_header {
+            color: #333;
+        }
+
+        .s_value {
+            color: #212529;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Screenshots & Headers</h1>
+    <div class="container">
+        {% for domain in domains %}
+        <div class="domain">
+            <h2>{{ domain.title }}</h2>
+            <div class="img-container">
+                <img src="{{ url_for('static', filename=domain.screenshot) }}" alt="Screenshot">
+            </div>
+            <div class="server-headers">
+                <h3>Server Headers</h3>
+                <ul>
+                    {% for header, value in domain.headers.items() %}
+                    <li><strong class="s_header">{{ header }}:</strong> <span class="s_value">{{ value }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

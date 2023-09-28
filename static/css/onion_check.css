@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Proto Mono';
+    src: url('/static/fonts/Proto Mono Regular.ttf') format('truetype');
+    font-weight: 700;
+}
+
+body {
+    margin: 0;
+    text-align: center;
+    background-color: #f7f7f7;
+    padding: 20px;
+}
+
+h1 {
+    font-family: 'Righteous', cursive;
+    font-size: 2vw;
+    color: #21325b;
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border: none;
+    border-radius: 5px;
+    border-collapse: separate;
+    background-color: transparent;
+    box-shadow: 0 0 10px #21325b;
+}
+
+table:hover{
+    box-shadow: 0 0 10px #848884, 0 0 15px #21325b;
+    transition: border 0.3s, box-shadow 0.5s;
+}
+
+th, td {
+    border: 1px solid #b2beb5;
+    border-radius: 5px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #3c4a54;
+}
+
+th {
+    background-color: #b2beb5; 
+    padding: 10px;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+    font-size: 1vw;
+    font-weight: 100rem;
+    color: #004687;
+}
+
+th {
+    cursor: default;
+}
+
+tr{
+    background-color: #e5e4e2;
+}
+
+tr:hover{
+    background-color: #FAF9F6;
+    transition: background-color 0.3s;
+}
+
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.refresh-button-container {
+    margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.square-refresh-button {
+    background-color: rgb(0,0,0);
+    opacity: 0.5;
+    border-radius: 5px;
+    border: none;
+    width: 35px; 
+    height: 35px; 
+    padding: 10 auto;
+    box-shadow: 0 0 10px #21325b, 0 0 20px #848884;
+    margin-left: 10px;
+}
+
+.square-refresh-button i {
+    font-size: 17px;
+    color: #e0ff05;
+}
+
+.square-refresh-button:hover {
+    background-color: #36454F;
+    cursor: pointer;
+    opacity: 0.7;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s;
+}
+
+.square-refresh-button i:hover{
+    color: #fc7a00;
+}

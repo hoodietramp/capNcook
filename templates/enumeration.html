@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enumeration Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Righteous|Ubuntu+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset some default styles */
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* Define the font face for Proto Mono */
+        @font-face {
+            font-family: 'Proto Mono';
+            src: url('/static/fonts/Proto Mono Regular.ttf') format('truetype');
+            font-weight: 700;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #B2BEB5; /* Light gray background */
+            font-family: 'Ubuntu Mono', monospace;
+            color: #36454F; /* Dark gray text color */
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            text-align: center;
+            padding: 20px;
+            font-size: 2vw;
+            color: #21325b; /* Dark blue */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .domain {
+            background-color: #E5E4E2; /* Light gray background */
+            border: 1px solid #848884;
+            box-shadow:
+                0 0 10px #848884,
+                0 0 20px #848884; /* Grayish shadow effect */
+            border-radius: 7px;
+            margin: 10px;
+            padding: 20px;
+            width: 100%;
+            position: relative;
+            cursor: default;
+        }
+
+        .domain:hover {
+            background-color: #FAF9F6; /* Light gray background on hover */
+            border: 1px solid #000000;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4), 0px 0px 30px #21325b;
+            transition: border 0.3s, box-shadow 0.5s;
+        }
+
+        .domain h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #0078d4; /* Dark blue */
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .domain h2:hover{
+            color: #fc7a00;
+        }
+
+        .scan-output {
+            margin-top: 20px;
+            border: 0.5px solid #333333;
+            padding: 10px;
+            border-radius: 7px;
+            background-color: #fdfdfd;
+        }
+
+        .scan-output h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333333; /* Neon Green */
+        }
+
+        .scan-output pre {
+            white-space: pre-wrap;
+            font-family: 'Ubuntu Mono', 'Proto Mono', monospace;
+            font-size: 16px;
+            color: #3e4144;
+            cursor: text;
+        }
+
+        .scan-output pre:hover {
+            color: #21325b;
+            transition: color 0.3s;
+        }
+
+        .centered-container{
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+        }
+
+        .square-refresh-button {
+            background-color: rgb(0,0,0);
+            opacity: 0.5;
+            border-radius: 5px;
+            border: none;
+            width: 35px; 
+            height: 35px; 
+            padding: 10 auto;
+            box-shadow: 0 0 10px #21325b, 0 0 20px #848884; 
+        }
+
+        .square-refresh-button i {
+            font-size: 17px;
+            color: #e0ff05;
+        }
+
+        .square-refresh-button:hover{
+            background-color: #36454F;
+            cursor: pointer;
+            opacity: 0.7;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.3s;
+        }
+
+        .square-refresh-button i:hover{
+            color: #fc7a00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enumeration Report</h1>
+    <div class="container">
+        {% for result in enumeration_outputs %}
+        <div class="domain">
+            <h2>Report for -> {{ result.onion_link }}</h2>
+            <div class="scan-output feroxbuster-output">
+                <h3>Interesting Files Found: </h3>
+                <pre>{{ result.feroxbuster_output }}</pre>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="centered-container">
+    <form method="POST" action="{{ url_for('refresh_cache') }}">
+        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
+            <i class="fas fa-sync-alt fa-spin"></i>
+        </button>
+    </form>
+    </div>
+</body>
+</html>
