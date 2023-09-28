@@ -5,3 +5,4 @@ python-dotenv==1.0.0
 Requests==2.31.0
 termcolor==1.1.0
 tqdm==4.64.1
+pysocks==1.7.1

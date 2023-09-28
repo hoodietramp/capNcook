@@ -3,41 +3,57 @@ FROM ubuntu:20.04
 
 # Set environment variables
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=127.0.0.1
+ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
+    apt-utils \
     python3 \
     python3-pip \
     tor \
     proxychains4 \
     curl \
-    sudo \
-    lolcat \
-    && rm -rf /var/lib/apt/lists/*
+    nikto \
+    unzip \
+    whois \
+    jq \
+    wget
 
+RUN rm -rf /var/lib/apt/lists/*
 # Set the working directory
 WORKDIR /app
 
-# Copy your application code to the container
+# Copying web-{front-back}end to docker 
 COPY . /app
+# Copying config files
+COPY torrc  /etc/tor/
+COPY proxychains4.conf  /etc/
 
-# Install Python dependencies
+
+# Install Python dependencies 
 RUN pip3 install -r requirements.txt
+
+WORKDIR /tmp
+# Installing tools
+RUN wget https://github.com/epi052/feroxbuster/releases/download/v2.10.0/x86_64-linux-feroxbuster.zip
+RUN unzip x86_64-linux-feroxbuster.zip
+RUN mv feroxbuster /usr/bin/
+RUN chmod +x /usr/bin/feroxbuster
+RUN rm x86_64-linux-feroxbuster.zip
+
+RUN wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
+RUN unzip aquatone_linux_amd64_1.7.0.zip
+RUN mv aquatone /usr/bin/
+RUN chmod +x /usr/bin/aquatone
+RUN rm LICENSE.txt README.md aquatone_linux_amd64_1.7.0.zip
+
+WORKDIR /app
+RUN mv startup.sh /
+RUN chmod +x /startup.sh
 
 # Expose the port
 EXPOSE 5000
 
-# Start Tor service and run Flask
-CMD /bin/sh -c "echo 'socks5 127.0.0.1 9050' >> /etc/proxychains4.conf && \
-    echo 'SocksPort 9050' > /etc/tor/torrc && \
-    echo 'CookieAuthentication 1' >> /etc/tor/torrc && \
-    echo 'HiddenServiceDir /var/lib/tor/hidden_service/' >> /etc/tor/torrc && \
-    echo 'HiddenServicePort 80 127.0.0.1:5000' >> /etc/tor/torrc && \
-    echo 'HiddenServiceVersion 3' >> /etc/tor/torrc && \
-    echo 'HiddenServiceMaxStreams 100' >> /etc/tor/torrc && \
-    echo 'CircuitBuildTimeout 10' >> /etc/tor/torrc && \
-    echo 'KeepalivePeriod 60 seconds' >> /etc/tor/torrc && \
-    echo 'Log notice file /var/log/tor/notices.log' >> /etc/tor/torrc && \
-    service tor start && python3 app.py"
+ENTRYPOINT service tor start && bash
+RUN python3 app.py 

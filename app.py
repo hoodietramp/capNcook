@@ -14,7 +14,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-tor_link = os.system("echo '<sudo_password>' | sudo -S cat /var/lib/tor/hidden_service/hostname | lolcat")
+# Really ignore this, I regret not deleting this - Hoodie
+os.system("cat /var/lib/tor/hidden_service/hostname")
+os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
+
 
 command = "curl https://api.ipify.org"
 process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -42,7 +45,7 @@ app.secret_key = os.getenv('secret_key')
 
 def index():
     
-    return render_template("index.html")
+    return render_template("index.html", pub_ip=pub_ip,anon_ip=anon_ip)
 
 @app.route('/onion_check')
 
@@ -64,16 +67,16 @@ def run_backend_onionCheck():
     'https': 'socks5h://127.0.0.1:9050'
     }
 
-    print("\nTor Connection Check")
-    try:
-        system_ip = requests.get('https://ident.me', proxies=proxies).text
-        tor_ip_list = requests.get('https://check.torproject.org/exit-addresses').text
-        if system_ip in tor_ip_list:
-            print('Tor_IP: ', system_ip)
-            print("\nTor Connection Success \n")
-    except:
-        print("Error: Configure Tor as service")
-        exit()
+    # print("\nTor Connection Check")
+    # try:
+    #     system_ip = requests.get('https://ident.me', proxies=proxies).text
+    #     tor_ip_list = requests.get('https://check.torproject.org/exit-addresses').text
+    #     if system_ip in tor_ip_list:
+    #         print('Tor_IP: ', system_ip)
+    #         print("\nTor Connection Success \n")
+    # except:
+    #     print("Error: Configure Tor as service")
+    #     exit()
 
     with open('domains.txt', 'r') as file:
         domains = file.readlines()
@@ -133,7 +136,7 @@ def recon():
 # Example backend operation (replace with your actual code)
 def run_backend_recon():
     def run_whois(onion_link, index):
-        command = f"whois -h torwhois.com {onion_link} | tee recon_output/recon{index}.txt"
+        command = f"sleep 1s; whois -h torwhois.com {onion_link} | tee recon_output/recon{index}.txt"
         result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
         if result.returncode == 0:
@@ -180,16 +183,16 @@ def headers():
     domains = []
 
     cmd2 = "cat domains.txt 2>/dev/null | aquatone -out static/aqua_out -ports 80 -proxy socks5://127.0.0.1:9050 -http-timeout 30000 -screenshot-timeout 60000 2>/dev/null"
-
-    cmd3 = "eog static/aqua_out/screenshots/ &"
+    # For personal debugging
+    # cmd3 = "eog static/aqua_out/screenshots/ &"
 
     screenshot_dir = 'aqua_out/screenshots'
     
     print(colored("\n[+] Capturing Screenshots...", "green"))
     os.system(cmd2)  # Execute cmd2
 
-    print(colored("\n[+] Opening screenshots...", "green"))
-    os.system(cmd3)  # Open Screenshots
+    # print(colored("\n[+] Opening screenshots...", "green"))
+    # os.system(cmd3)  # Open Screenshots
 
     for onion_url in onion_urls:
         try:
@@ -238,7 +241,7 @@ def run_backend_enum():
         return colored(f"\nNikto scan for {onion_link} completed.", "yellow")
 
     def run_feroxbuster(onion_link, index):
-        feroxbuster_command = f"proxychains -q feroxbuster -u {onion_link} -w wordlist.txt --threads 30 -C 404 --time-limit 30s --auto-bail -q"
+        feroxbuster_command = f"feroxbuster -u {onion_link} -w wordlist.txt --threads 30 -C 404 --time-limit 30s --auto-bail -q  --proxy socks5h://127.0.0.1:9050 "
         subprocess.run(feroxbuster_command, shell=True)
         feroxbuster_process = subprocess.Popen(feroxbuster_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         feroxbuster_output, _ = feroxbuster_process.communicate()
@@ -357,4 +360,4 @@ def refresh_cache():
 
 if __name__ == "__main__":
 
-    app.run(port=5000)
+    app.run(host='0.0.0.0' ,port=5000)

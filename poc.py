@@ -63,5 +63,5 @@ for index in range(1, 21):
 
 # Display the JSON content in the terminal using cat and jq
 if response_files:
-    cat_command = f"cat {' '.join(response_files)} | jq | cowsay | lolcat"
+    cat_command = f"cat {' '.join(response_files)} | jq"
     os.system(cat_command)
