@@ -1,0 +1,14 @@
+aquatone_result/
+ferox_log/
+json_response/
+nikto_log/
+recon_output/
+validations/
+.env
+capNcook.docx
+domains.txt
+grep_search
+Idea-Presentation-Format-SIH2023-capNcook.pptx
+json_torwhois.py
+torwhois.py
+
