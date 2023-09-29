@@ -9,6 +9,15 @@
 <body>
     <div class="centered-container">
         <h1>Onion Check Results</h1>
+        
+        <form method="POST" action="{{ url_for('refresh_cache') }}">
+            <div class="refresh-button-container">
+                <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
+                    <i class="fas fa-sync-alt fa-spin"></i>
+                </button>
+            </div>
+        </form>
+
         <table>
             <tr>
                 <th>URL</th>
@@ -25,13 +34,7 @@
             </tr>
             {% endfor %}
         </table>
-        <form method="POST" action="{{ url_for('refresh_cache') }}">
-            <div class="refresh-button-container">
-                <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
-                    <i class="fas fa-sync-alt fa-spin"></i>
-                </button>
-            </div>
-        </form>
+        
     </div>
 </body>
 </html>

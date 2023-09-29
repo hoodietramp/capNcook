@@ -141,6 +141,15 @@
 </head>
 <body>
     <h1>Enumeration Report</h1>
+    
+    <div class="centered-container">
+    <form method="POST" action="{{ url_for('refresh_cache') }}">
+        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
+            <i class="fas fa-sync-alt fa-spin"></i>
+        </button>
+    </form>
+    </div>
+    
     <div class="container">
         {% for result in enumeration_outputs %}
         <div class="domain">
@@ -152,12 +161,6 @@
         </div>
         {% endfor %}
     </div>
-    <div class="centered-container">
-    <form method="POST" action="{{ url_for('refresh_cache') }}">
-        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
-            <i class="fas fa-sync-alt fa-spin"></i>
-        </button>
-    </form>
-    </div>
+    
 </body>
 </html>

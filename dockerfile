@@ -1,10 +1,16 @@
-# Use the official multi-platform Ubuntu base image
-FROM ubuntu:20.04
+# Use the official Kali Linux base image
+FROM kalilinux/kali-rolling
+
+# Set the timezone to Indian Standard Time (IST)
+ENV TZ=Asia/Kolkata
 
 # Set environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
+
+# Install tzdata and configure the timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
@@ -19,19 +25,18 @@ RUN apt-get update && apt-get install -y \
     whois \
     jq \
     wget \
-    chromium-browser
+    chromium
 
-RUN rm -rf /var/lib/apt/lists/*
 # Set the working directory
 WORKDIR /app
 
-# Copying web-{front-back}end to docker 
+# Copying web-{front-back}end to docker
 COPY . /app
 # Copying config files
 COPY torrc  /etc/tor/
-COPY proxychains4.conf  /etc/
+# COPY proxychains4.conf  /etc/
 
-# Install Python dependencies 
+# Install Python dependencies
 RUN pip3 install -r requirements.txt
 
 WORKDIR /tmp

@@ -222,64 +222,66 @@ def headers():
     return render_template("headers.html", domains=domains)
 
 @app.route('/enumeration')
-
 def enumeration():
     if 'enumeration_results' in session:
         enumeration_outputs = session['enumeration_results']
     else:
         enumeration_outputs = run_backend_enum()
-        session['enumeration_results'] = enumeration_outputs 
+        session['enumeration_results'] = enumeration_outputs
 
     return render_template("enumeration.html", enumeration_outputs=enumeration_outputs)
 
+# if not os.path.exists('nikto_log'):
+#     os.makedirs('nikto_log')
+
+if not os.path.exists('ferox_log'):
+        os.makedirs('ferox_log')
+
+def run_feroxbuster(onion_link, index):
+
+    feroxbuster_command = f"feroxbuster -u {onion_link} -w wordlist.txt --proxy socks5h://127.0.0.1:9050 --threads 30 -C 404 --time-limit 40s --auto-bail -q"
+    
+    try:
+        feroxbuster_output = subprocess.check_output(feroxbuster_command, shell=True, stderr=subprocess.STDOUT, text=True)
+    except subprocess.CalledProcessError as e:
+        feroxbuster_output = e.output
+    
+    # Filter out lines containing "404"
+    filtered_output_lines = [line for line in feroxbuster_output.split('\n') if "404" not in line]
+
+    # Combine the filtered lines back into a single string
+    filtered_output = '\n'.join(filtered_output_lines)
+
+    with open(f'ferox_log/fuzz{index}.log', 'w') as log_file:
+        log_file.write(filtered_output)
+
+    return filtered_output
+
 def run_backend_enum():
-    def run_nikto(onion_link, index):
-        if not os.path.exists('nikto_log'):
-            os.makedirs('nikto_log')
-
-        nikto_command = f"proxychains -q nikto -h {onion_link} -Tuning 2,3,5,0,a,b -Display 3,S -maxtime 10s -o nikto_log/vuln{index}.json"
-        subprocess.run(nikto_command, shell=True)
-        return colored(f"\nNikto scan for {onion_link} completed.", "yellow")
-
-    def run_feroxbuster(onion_link, index):
-        if not os.path.exists('ferox_log'):
-            os.makedirs('ferox_log')
-
-        feroxbuster_command = f"feroxbuster -u {onion_link} -w wordlist.txt --proxy socks5h://127.0.0.1:9050 --threads 30 -C 404 --time-limit 30s --auto-bail -q"
-        subprocess.run(feroxbuster_command, shell=True)
-        feroxbuster_process = subprocess.Popen(feroxbuster_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        feroxbuster_output, _ = feroxbuster_process.communicate()
-
-        # Filter out lines containing "404"
-        filtered_output_lines = [line for line in feroxbuster_output.split('\n') if "404" not in line]
-
-        # Combine the filtered lines back into a single string
-        filtered_output = '\n'.join(filtered_output_lines)
-
-        with open(f'ferox_log/fuzz{index}.log', 'w') as log_file:
-            log_file.write(filtered_output)
-
-        return filtered_output
-
     with open('domains.txt', 'r') as file:
         onion_links = file.read().splitlines()
 
     enumeration_outputs = []
 
-    for index, onion_link in enumerate(onion_links, start=1):
-        print(colored(f"\n{'-' * 40}\nScanning {onion_link}\n{'-' * 40}", "green"))
-
-        nikto_message = run_nikto(onion_link, index)
-        print(nikto_message)
-
-        print(colored(f"\n{'-' * 40}\nFuzzing {onion_link}\n{'-' * 40}", "green"))
-
+    def run_feroxbuster_for_link(onion_link, index):
         feroxbuster_output = run_feroxbuster(onion_link, index)
-
         enumeration_outputs.append({
             'onion_link': onion_link,
             'feroxbuster_output': feroxbuster_output
         })
+
+    # Create a list to hold thread objects
+    threads = []
+
+    for index, onion_link in enumerate(onion_links, start=1):
+        # Create a thread for each onion_link
+        thread = threading.Thread(target=run_feroxbuster_for_link, args=(onion_link, index))
+        threads.append(thread)
+        thread.start()
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
 
     return enumeration_outputs
 
@@ -303,7 +305,7 @@ def search():
     
     print(colored("[+] Searching for top domains... \n", "yellow"))
     
-    cmd1 = f"curl -s 'https://ahmia.fi/search/?q={encoded_keywords}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 15 > domains.txt 2>/dev/null"
+    cmd1 = f"curl -s 'https://ahmia.fi/search/?q={encoded_keywords}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 10 > domains.txt 2>/dev/null"
     
     # cmd2 = "cat domains.txt 2>/dev/null | ./aquatone -out templates/aqua_out -proxy socks5://127.0.0.1:9050 -ports 80 -threads 50 -http-timeout 30000 -screenshot-timeout 10000 -resolution \"1920,1080\" 2>/dev/null"
 
