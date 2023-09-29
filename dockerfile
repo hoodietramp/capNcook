@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     whois \
     jq \
-    wget
+    wget \
+    chromium-browser
 
 RUN rm -rf /var/lib/apt/lists/*
 # Set the working directory
@@ -29,7 +30,6 @@ COPY . /app
 # Copying config files
 COPY torrc  /etc/tor/
 COPY proxychains4.conf  /etc/
-
 
 # Install Python dependencies 
 RUN pip3 install -r requirements.txt
@@ -49,10 +49,8 @@ RUN chmod +x /usr/bin/aquatone
 RUN rm LICENSE.txt README.md aquatone_linux_amd64_1.7.0.zip
 
 WORKDIR /app
-RUN mv startup.sh /
-RUN chmod +x /startup.sh
 
 # Expose the port
 EXPOSE 5000
 
-ENTRYPOINT service tor start && python3 app.py && bash
+ENTRYPOINT service tor start && python3 app.py
