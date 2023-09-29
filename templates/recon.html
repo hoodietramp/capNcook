@@ -34,8 +34,8 @@
         .recon-container {
             background-color: #FEFFFC;
             max-width: 90%;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0 auto 20px;
+            padding: 20px 0;
             border: 1px solid #848884; /* Gray border */
             border-radius: 7px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4); /* Subtle shadow */
@@ -80,6 +80,7 @@
             display: flex;
             justify-content: center;
             margin-top: 20px;
+            margin-bottom: 10px;
         }
 
         .square-refresh-button {
@@ -114,6 +115,15 @@
 
 <body>
     <h1 class="recon-title">Recon Report</h1>
+    
+    <div class="centered-container">
+    <form method="POST" action="{{ url_for('refresh_cache') }}">
+        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
+            <i class="fas fa-sync-alt fa-spin"></i>
+        </button>
+    </form>
+    </div>
+
     <div class="recon-container">
         <ul> 
             {% for recon_output in recon_outputs %}
@@ -124,13 +134,7 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="centered-container">
-    <form method="POST" action="{{ url_for('refresh_cache') }}">
-        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
-            <i class="fas fa-sync-alt fa-spin"></i>
-        </button>
-    </form>
-    </div>
+    
 </body>
 
 </html>
