@@ -1,9 +1,0 @@
-200 OK
-Retry-Count: 0
-Server: Caddy
-X-Frame-Options: SAMEORIGIN
-Date: Wed, 27 Sep 2023 17:41:49 GMT
-Onion-Location: http://qt5vr747phiq55ubqip4hflmpygzl374mum2zbyqdxg6sqbngmzlqhid.onion/
-Set-Cookie: i_like_gitea=bf04fc71edfe9726; Path=/; HttpOnly; Secure; SameSite=Lax _csrf=k02zxRx7luKNO6sPpnnfhafSxro6MTY5NTgzNjUwOTUyMjU5NTg5MQ; Path=/; Max-Age=86400; HttpOnly; Secure; SameSite=Lax
-Cache-Control: max-age=0, private, must-revalidate, no-transform
-Content-Type: text/html; charset=utf-8

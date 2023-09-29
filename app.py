@@ -11,13 +11,14 @@ from tqdm import tqdm
 from time import sleep
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+import threading
 
 load_dotenv()
 
 # Really ignore this, I regret not deleting this - Hoodie
-os.system("cat /var/lib/tor/hidden_service/hostname")
 os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
-
+print("\n")
+os.system("echo 'TOR HIDDEN SERVICE ACCESSIBLE AT -> '; cat /var/lib/tor/hidden_service/hostname")
 
 command = "curl https://api.ipify.org"
 process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -35,7 +36,7 @@ print(colored("\nAnonymized IP: " + anon_ip, "red"))
 print("\n")
 
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
-app.config['CACHE_TYPE'] = 'simple'  # You can choose a caching type that suits your needs
+app.config['CACHE_TYPE'] = 'simple'
 cache = Cache(app)
 app.config['CACHE_DEFAULT_TIMEOUT'] = 3000
 
@@ -51,89 +52,85 @@ def index():
 
 def onion_check():
     if 'onionCheck_results' in session:
-        # If the results are already cached in the session, use them
         results = session['onionCheck_results']
     else:
-        # Otherwise, run the backend operation and cache the results
-        results = run_backend_onionCheck()  # Replace with your actual backend code
-        session['onionCheck_results'] = results  # Cache the results in the session
+        results = run_backend_onionCheck() 
+        session['onionCheck_results'] = results
 
     return render_template("onion_check.html", results=results)
-   
-    
+
+def check_domain(url, proxies, results_lock, results):
+    result = {}
+    status = 'N/A'
+    status_code = 'N/A'
+
+    try:
+        data = requests.get(url, proxies=proxies)
+    except:
+        data = 'error'
+
+    if data != 'error':
+        status = 'Active'
+        status_code = data.status_code
+        soup = BeautifulSoup(data.text, 'html.parser')
+        page_title = str(soup.title)
+        page_title = page_title.replace('<title>', '')
+        page_title = page_title.replace('</title>', '')
+        result['url'] = url
+        result['status'] = 'Active'
+        result['status_code'] = data.status_code
+        result['page_title'] = page_title
+
+    elif data == 'error':
+        status = "Inactive"
+        status_code = 'NA'
+        page_title = 'NA'
+        result['url'] = url
+        result['status'] = 'Inactive'
+        result['status_code'] = 'NA'
+        result['page_title'] = 'NA'
+
+    with results_lock:
+        results.append(result)
+
+    print("\n")
+    print(colored(f"{url}: {status}: {status_code}: {page_title}", "cyan"))
+
 def run_backend_onionCheck():
     proxies = {
-    'http': 'socks5h://127.0.0.1:9050',
-    'https': 'socks5h://127.0.0.1:9050'
+        'http': 'socks5h://127.0.0.1:9050',
+        'https': 'socks5h://127.0.0.1:9050'
     }
-
-    # print("\nTor Connection Check")
-    # try:
-    #     system_ip = requests.get('https://ident.me', proxies=proxies).text
-    #     tor_ip_list = requests.get('https://check.torproject.org/exit-addresses').text
-    #     if system_ip in tor_ip_list:
-    #         print('Tor_IP: ', system_ip)
-    #         print("\nTor Connection Success \n")
-    # except:
-    #     print("Error: Configure Tor as service")
-    #     exit()
 
     with open('domains.txt', 'r') as file:
         domains = file.readlines()
 
     results = []
+    results_lock = threading.Lock()
+
+    threads = []
 
     for url in domains:
-        url = url.strip('\n') 
-        result = {} 
-        status = 'N/A'
-        status_code = 'N/A'
+        url = url.strip('\n')
+        thread = threading.Thread(target=check_domain, args=(url, proxies, results_lock, results))
+        threads.append(thread)
+        thread.start()
 
-        try:
-            data = requests.get(url, proxies=proxies)
-        except:
-            data = 'error'
-
-        if data != 'error':
-            status = 'Active'
-            status_code = data.status_code
-            soup = BeautifulSoup(data.text, 'html.parser')
-            page_title = str(soup.title)
-            page_title = page_title.replace('<title>', '')
-            page_title = page_title.replace('</title>', '')
-            result['url'] = url
-            result['status'] = 'Active'
-            result['status_code'] = data.status_code
-            result['page_title'] = page_title
-        
-        elif data == 'error':
-            status = "Inactive"
-            status_code = 'NA'
-            page_title = 'NA'
-            result['url'] = url
-            result['status'] = 'Inactive'
-            result['status_code'] = 'NA'
-            result['page_title'] = 'NA'
-
-        results.append(result)
-
-        print(url, ': ', status, ': ', status_code, ': ', page_title)
+    for thread in threads:
+        thread.join()
 
     return results
 
 @app.route('/recon')
 def recon():
     if 'recon_results' in session:
-        # If the results are already cached in the session, use them
         recon_outputs = session['recon_results']
     else:
-        # Otherwise, run the backend operation and cache the results
-        recon_outputs = run_backend_recon()  # Replace with your actual backend code
-        session['recon_results'] = recon_outputs  # Cache the results in the session
+        recon_outputs = run_backend_recon() 
+        session['recon_results'] = recon_outputs
 
     return render_template("recon.html", recon_outputs=recon_outputs)
 
-# Example backend operation (replace with your actual code)
 def run_backend_recon():
     def run_whois(onion_link, index):
         command = f"sleep 1s; whois -h torwhois.com {onion_link} | tee recon_output/recon{index}.txt"
@@ -141,7 +138,7 @@ def run_backend_recon():
 
         if result.returncode == 0:
             output_lines = result.stdout.splitlines()
-            output_lines = output_lines[:-3]  # Exclude the last four lines
+            output_lines = output_lines[:-3]
             output = '\n'.join(output_lines)
 
         else:
@@ -169,32 +166,20 @@ def run_backend_recon():
     return recon_outputs
 
 @app.route('/headers')
-
 def headers():
 
-    proxies = {
+    cmd2 = "cat domains.txt 2>/dev/null | aquatone -out static/aqua_out -ports 80 -proxy socks5://127.0.0.1:9050 -http-timeout 30000 -screenshot-timeout 60000 2>/dev/null"
+
+    print(colored("\n[+] Capturing Screenshots...", "green"))
+    os.system(cmd2)
+    
+    def fetch_header(onion_url):
+        
+        proxies = {
         'http': 'socks5h://127.0.0.1:9050',
         'https': 'socks5h://127.0.0.1:9050'
-    }
-
-    with open('domains.txt', 'r') as file:
-        onion_urls = file.read().splitlines()
-
-    domains = []
-
-    cmd2 = "cat domains.txt 2>/dev/null | aquatone -out static/aqua_out -ports 80 -proxy socks5://127.0.0.1:9050 -http-timeout 30000 -screenshot-timeout 60000 2>/dev/null"
-    # For personal debugging
-    # cmd3 = "eog static/aqua_out/screenshots/ &"
-
-    screenshot_dir = 'aqua_out/screenshots'
-    
-    print(colored("\n[+] Capturing Screenshots...", "green"))
-    os.system(cmd2)  # Execute cmd2
-
-    # print(colored("\n[+] Opening screenshots...", "green"))
-    # os.system(cmd3)  # Open Screenshots
-
-    for onion_url in onion_urls:
+        }
+        
         try:
             onion_url = onion_url.strip()
             screenshot_filename = f"{onion_url.replace('://', '__').replace('.onion', '_onion')}__da39a3ee5e6b4b0d.png"
@@ -208,16 +193,31 @@ def headers():
                     'screenshot': screenshot_path,
                 }
 
-                # Print the headers in the terminal
-                print(colored(f"\n{'-' * 40}\nHeaders for {onion_url}\n{'-' * 40}", "green"))
-                for header, value in response.headers.items():
-                    print(f"{header}: {value}")
-                print("-" * 40) 
+                # Print headers in terminal
+                # print(colored(f"\n{'-' * 40}\nHeaders for {onion_url}\n{'-' * 40}", "green"))
+                # for header, value in response.headers.items():
+                #     print(f"{header}: {value}")
+                # print("-" * 40)
 
                 domains.append(headers)
         except Exception as e:
             print(f"An error occurred for {onion_url}: {str(e)}")
-            print("-" * 40) 
+
+    domains = []
+    threads = []
+
+    with open('domains.txt', 'r') as file:
+        onion_urls = file.read().splitlines()
+
+    screenshot_dir = 'aqua_out/screenshots'
+
+    for onion_url in onion_urls:
+        thread = threading.Thread(target=fetch_header, args=(onion_url,))
+        threads.append(thread)
+        thread.start()
+
+    for thread in threads:
+        thread.join()
 
     return render_template("headers.html", domains=domains)
 
@@ -225,23 +225,27 @@ def headers():
 
 def enumeration():
     if 'enumeration_results' in session:
-        # If the results are already cached in the session, use them
         enumeration_outputs = session['enumeration_results']
     else:
-        # Otherwise, run the backend operation and cache the results
-        enumeration_outputs = run_backend_enum()  # Replace with your actual backend code
-        session['enumeration_results'] = enumeration_outputs  # Cache the results in the session
+        enumeration_outputs = run_backend_enum()
+        session['enumeration_results'] = enumeration_outputs 
 
     return render_template("enumeration.html", enumeration_outputs=enumeration_outputs)
 
 def run_backend_enum():
     def run_nikto(onion_link, index):
-        nikto_command = f"proxychains nikto -h {onion_link} -Tuning 2,3,5,0,a,b -Display 3,S -maxtime 60s -o nikto_log/vuln{index}.json"
+        if not os.path.exists('nikto_log'):
+            os.makedirs('nikto_log')
+
+        nikto_command = f"proxychains -q nikto -h {onion_link} -Tuning 2,3,5,0,a,b -Display 3,S -maxtime 10s -o nikto_log/vuln{index}.json"
         subprocess.run(nikto_command, shell=True)
         return colored(f"\nNikto scan for {onion_link} completed.", "yellow")
 
     def run_feroxbuster(onion_link, index):
-        feroxbuster_command = f"feroxbuster -u {onion_link} -w wordlist.txt --threads 30 -C 404 --time-limit 30s --auto-bail -q  --proxy socks5h://127.0.0.1:9050 "
+        if not os.path.exists('ferox_log'):
+            os.makedirs('ferox_log')
+
+        feroxbuster_command = f"feroxbuster -u {onion_link} -w wordlist.txt --proxy socks5h://127.0.0.1:9050 --threads 30 -C 404 --time-limit 30s --auto-bail -q"
         subprocess.run(feroxbuster_command, shell=True)
         feroxbuster_process = subprocess.Popen(feroxbuster_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         feroxbuster_output, _ = feroxbuster_process.communicate()
@@ -282,40 +286,28 @@ def run_backend_enum():
 @app.route("/search", methods=["GET", "POST"])
 
 def search():
-    # Check if the "Refresh Cache" button was pressed
-    if request.method == "POST" and request.form.get("refresh_cache"):
-        # Clear the cache
-        session.pop('search_results', None)
 
-    search_results = session.get('search_results')
-
-    if search_results is None:
-        keywords = request.form.get("keywords")
-
-        if keywords is None:
-            return "No search input provided in the request."
-
-        search_results = run_backend_search(keywords)
-        session['search_results'] = search_results  # Cache the results in the session
-
-    return render_template("index.html", **search_results)
-
-def run_backend_search(keywords):
     keywords = request.form.get("keywords")
     
     if keywords is None:
-
-        return "No search input provided in the request."
+        message = f"capNcook|"
+        return render_template("index.html", pub_ip=pub_ip, anon_ip=anon_ip, message=message)
+        # return {
+        #     'pub_ip': pub_ip,
+        #     'anon_ip': anon_ip,
+        #     'message': 'No search input provided in the request.',
+        #     'domain_links': []
+        # }
     
     encoded_keywords = urllib.parse.quote(keywords.encode("utf-8"))
     
     print(colored("[+] Searching for top domains... \n", "yellow"))
     
-    cmd1 = f"curl -s 'https://ahmia.fi/search/?q={encoded_keywords}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 30 > domains.txt 2>/dev/null"
+    cmd1 = f"curl -s 'https://ahmia.fi/search/?q={encoded_keywords}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 15 > domains.txt 2>/dev/null"
     
     # cmd2 = "cat domains.txt 2>/dev/null | ./aquatone -out templates/aqua_out -proxy socks5://127.0.0.1:9050 -ports 80 -threads 50 -http-timeout 30000 -screenshot-timeout 10000 -resolution \"1920,1080\" 2>/dev/null"
 
-    total_iterations = 15  # Total number of iterations for both cmd1 and cmd2
+    total_iterations = 1
     
     # Use tqdm to create a progress bar for cmd1
     custom_bar_format = "{desc} | {bar} | {percentage:3.0f}%"
@@ -334,14 +326,10 @@ def run_backend_search(keywords):
 
     message = f"Domains Listed for {keywords}|"
 
-    return {
-        'pub_ip': pub_ip,
-        'anon_ip': anon_ip,
-        'message': message,
-        'domain_links': domain_links
-    }
+    return render_template("index.html", pub_ip=pub_ip, anon_ip=anon_ip, message=message, domain_links=domain_links)
 
 @app.route('/refresh_cache', methods=['POST'])
+
 def refresh_cache():
 
     if 'onionCheck_results' in session:
@@ -352,8 +340,6 @@ def refresh_cache():
         del session['headers_results']
     if 'enumeration_results' in session:
         del session['enumeration_results']
-    if 'search_results' in session:
-        del session['search_results']
 
     return redirect(request.referrer)
 
