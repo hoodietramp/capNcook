@@ -34,7 +34,7 @@ WORKDIR /app
 COPY . /app
 # Copying config files
 COPY torrc  /etc/tor/
-# COPY proxychains4.conf  /etc/
+COPY proxychains4.conf  /etc/
 
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
