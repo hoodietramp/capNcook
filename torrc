@@ -13,10 +13,10 @@ CookieAuthFileGroupReadable 1
 CookieAuthFile /run/tor/control.authcookie
 
 
-HiddenServiceDir /var/lib/tor/hidden_service/ 
-HiddenServicePort 80 127.0.0.1:5000 
-HiddenServiceVersion 3 
-HiddenServiceMaxStreams 100 
-CircuitBuildTimeout 10 
-KeepalivePeriod 60 seconds
+#HiddenServiceDir /var/lib/tor/hidden_service/ 
+#HiddenServicePort 80 127.0.0.1:5000 
+#HiddenServiceVersion 3 
+#HiddenServiceMaxStreams 100 
+#CircuitBuildTimeout 10 
+#KeepalivePeriod 60 seconds
 Log notice file /var/log/tor/notices.log 

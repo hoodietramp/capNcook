@@ -12,23 +12,13 @@
 
 <body>
 
-    <div class="ip-box2">
-        <p class="ip-address">Entry Node -> </p>
-        <ul class="entry_ip">
-            <li><span class='nudges'>Fingerprint: </span>{{ entry_node.fingerprint }}<br></li>
-            <li><span class='nudges'>Nickname: </span>{{ entry_node.nickname }}<br></li>
-            <li><span class='nudges'>Address: </span>{{ entry_node.address }}</li>
-        </ul>
-    </div>
-    
     <div class="ip-box1">
-        <p class="ip-address">Exit Node -> </p>
-        <ul class="exit_ip">
-            <li><span class='nudges'>Fingerprint: </span>{{ exit_node.fingerprint }}<br></li>
-            <li><span class='nudges'>Nickname: </span>{{ exit_node.nickname }}<br></li>
-            <li><span class='nudges'>Address: </span>{{ exit_node.address }}</li>
-        </ul>
-    </div>       
+        <p class="ip-address">{{ anon_ip }}</p>
+    </div>
+
+    <div class="ip-box2">
+        <p class="ip-address">{{ pub_ip }}</p>
+    </div>
 
     <div class="navbar">    
         <div class="navbar-buttons">

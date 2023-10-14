@@ -12,13 +12,15 @@ from time import sleep
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import threading
+from stem import CircStatus
+from stem.control import Controller
 
 load_dotenv()
 
 # Really ignore this, I regret not deleting this - Hoodie
 os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
 print("\n")
-os.system("echo 'TOR HIDDEN SERVICE ACCESSIBLE AT -> '; cat /var/lib/tor/hidden_service/hostname")
+os.system("echo 'capNcook IRC Server -> capNcook.local'")
 
 command = "curl https://api.ipify.org"
 process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -42,11 +44,63 @@ app.config['CACHE_DEFAULT_TIMEOUT'] = 3000
 
 app.secret_key = os.getenv('secret_key')
 
-@app.route("/") 
+def get_last_entry_exit_relay():
+    entry_node = {}
+    exit_node = {}
+
+    with Controller.from_port(port=9051) as controller:
+        try:
+            controller.authenticate()
+            controller.signal("NEWNYM")
+
+            print("All circuits have been flushed.")
+            
+            last_circuit = None
+
+            for circ in controller.get_circuits():
+                if circ.status != CircStatus.BUILT:
+                    continue
+
+                last_circuit = circ
+
+            if last_circuit:
+                # Extract information about the entry node
+                entry_fp, entry_nickname = last_circuit.path[0]
+                entry_desc = controller.get_network_status(entry_fp, None)
+                entry_address = entry_desc.address if entry_desc else 'unknown'
+
+                entry_node = {
+                    "fingerprint": entry_fp,
+                    "nickname": entry_nickname,
+                    "address": entry_address
+                }
+
+                # Extract information about the exit node
+                exit_fp, exit_nickname = last_circuit.path[-1]
+                exit_desc = controller.get_network_status(exit_fp, None)
+                exit_address = exit_desc.address if exit_desc else 'unknown'
+
+                exit_node = {
+                    "fingerprint": exit_fp,
+                    "nickname": exit_nickname,
+                    "address": exit_address
+                }
+
+                print(f"Circuit Information:")
+                print(f"Entry Node\n fingerprint: {entry_fp}\n nickname: {entry_nickname}\n address: {entry_address}")
+                print(f"Exit Node\n fingerprint: {exit_fp}\n nickname: {exit_nickname}\n address: {exit_address}")
+                print("=" * 50)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    return entry_node, exit_node
+
+@app.route("/")
 
 def index():
-    
-    return render_template("index.html", pub_ip=pub_ip,anon_ip=anon_ip)
+    entry_node, exit_node = get_last_entry_exit_relay()
+    return render_template("index.html", entry_node=entry_node, exit_node=exit_node)
 
 @app.route('/onion_check')
 
@@ -288,12 +342,12 @@ def run_backend_enum():
 @app.route("/search", methods=["GET", "POST"])
 
 def search():
-
+    entry_node, exit_node = get_last_entry_exit_relay()
     keywords = request.form.get("keywords")
     
     if keywords is None:
         message = f"capNcook|"
-        return render_template("index.html", pub_ip=pub_ip, anon_ip=anon_ip, message=message)
+        return render_template("index.html", entry_node=entry_node, exit_node=exit_node, message=message)
         # return {
         #     'pub_ip': pub_ip,
         #     'anon_ip': anon_ip,
@@ -328,12 +382,11 @@ def search():
 
     message = f"Domains Listed for {keywords}|"
 
-    return render_template("index.html", pub_ip=pub_ip, anon_ip=anon_ip, message=message, domain_links=domain_links)
+    return render_template("index.html", entry_node=entry_node, exit_node=exit_node, message=message, domain_links=domain_links)
 
 @app.route('/refresh_cache', methods=['POST'])
 
 def refresh_cache():
-
     if 'onionCheck_results' in session:
         del session['onionCheck_results']
     if 'recon_results' in session:

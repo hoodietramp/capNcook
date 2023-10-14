@@ -6,3 +6,4 @@ Requests==2.31.0
 termcolor==1.1.0
 tqdm==4.64.1
 pysocks==1.7.1
+stem==1.8.2
