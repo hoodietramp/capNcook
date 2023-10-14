@@ -18,7 +18,7 @@ body {
 .navbar {
     background-color: rgb(0, 0, 0);
     position: absolute;
-    top: 20px;  
+    top: 20px;
     left: 50;
     padding: 10px 20px;
     border-radius: 15px;
@@ -292,77 +292,33 @@ input:hover {
     position: fixed;
     top: 15px;
     left: 60px;
-    width: 500px;
-    height: auto;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
     padding: 10px;
     border-radius: 15px;
+    font-family: "Proto Mono", monospace;
     font-size: 0.9rem;
-}
-
-.ip-box2:hover {
-    background-color: #121212;
-    box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
 }
 
 .ip-box1 {
     position: fixed;
     top: 15px;
     right: 60px;
-    width: 500px;
-    height: auto;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
     border-radius: 15px;
-}
-
-.ip-box1:hover {
-    background-color: #121212;
-    box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
+    font-family: "Proto Mono", monospace;
+    font-size: 0.9rem;
 }
 
 .ip-address {
      margin: 0;
-     color: rebeccapurple;
-     font-style: 'Righteous', cursive;
-     font-size: 1.1rem;
-     font-weight: 500;
 }
 
 .ip-address:hover{
      color: #fc7a00;
      cursor: wait;
-}
-
-.entry_ip {
-    list-style-type: none;
-}
-
-.entry_ip li{
-    text-align: left;
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
-}
-
-.exit_ip {
-    list-style-type: none;
-}
-
-.exit_ip li{
-    text-align: left;
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
-}
-
-.nudges {
-    color: #e0ff05;
-    font-family: 'Proto Mono', cursive;
-    font-size: 0.9rem;    
 }
 
 .centered-container{
