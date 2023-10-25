@@ -13,19 +13,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
-}
-
-@media screen and (max-width: 768px) {
-    body {
-        font-size: 14px; /* Adjust font size for smaller screens */
-    }
-}
-
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 12px; /* Further adjust font size for very small screens */
-    }
 }
 
 .navbar {
