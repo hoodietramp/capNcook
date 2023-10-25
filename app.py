@@ -20,22 +20,22 @@ load_dotenv()
 # Really ignore this, I regret not deleting this - Hoodie
 os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
 print("\n")
-os.system("echo 'capNcook IRC Server -> capNcook.local'")
+os.system("echo 'Hidden Service Url -> hoodyfml6kphashjq4uxhu6fdro4rkmmtgwrvrqu7dlo32jitvqwabqd.onion'")
 
-command = "curl https://api.ipify.org"
-process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-output, _ = process.communicate()
+#command = "curl https://api.ipify.org"
+#process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+#output, _ = process.communicate()
 
-pub_ip = output.decode().strip()
-print(colored("\nPublic IP: " + pub_ip, "yellow"))
+#pub_ip = output.decode().strip()
+#print(colored("\nPublic IP: " + pub_ip, "yellow"))
 
-command = "curl --socks5 '127.0.0.1:9050' https://api.ipify.org"
-process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-output, _ = process.communicate()
+#command = "curl --socks5 '127.0.0.1:9050' https://api.ipify.org"
+#process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+#output, _ = process.communicate()
 
-anon_ip = output.decode().strip()
-print(colored("\nAnonymized IP: " + anon_ip, "red"))
-print("\n")
+#anon_ip = output.decode().strip()
+#print(colored("\nAnonymized IP: " + anon_ip, "red"))
+#print("\n")
 
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
 app.config['CACHE_TYPE'] = 'simple'
@@ -48,7 +48,7 @@ def get_last_entry_exit_relay():
     entry_node = {}
     exit_node = {}
 
-    with Controller.from_port(port=9051) as controller:
+    with Controller.from_port(address="127.0.0.1", port=9051) as controller:
         try:
             controller.authenticate()
             controller.signal("NEWNYM")
@@ -401,4 +401,4 @@ def refresh_cache():
 
 if __name__ == "__main__":
 
-    app.run(host='0.0.0.0' ,port=5000)
+    app.run(host='0.0.0.0')
