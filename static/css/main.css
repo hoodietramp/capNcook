@@ -13,12 +13,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 12px; /* Further adjust font size for very small screens */
+    }
 }
 
 .navbar {
     background-color: rgb(0, 0, 0);
     position: absolute;
-    top: 20px;  
+    top: 20px;
     left: 50;
     padding: 10px 20px;
     border-radius: 15px;
@@ -267,199 +280,50 @@ input:hover {
     list-style: square inside;
     margin: 0;
     padding: 0;
-    color: #e0ff05;
 }
 
 .link-container li {
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 .link-container a {
     color: #fff;
     text-decoration: none;
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 1.2rem;
 }
 
 .link-container a:hover {
-    font-family: 'Proto Mono', monospace;
-    font-size: 1rem;
     color: #fc7a00;
-    text-shadow: 0 0 10px #fc7a00, 0 0 20px #fc7a00, 0 0 30px #121212, 0 0 40px #222;
-}
-
-.ip-box2 {
-    position: fixed;
-    top: 15px;
-    left: 60px;
-    width: 500px;
-    height: auto;
-    background-color: rgba(0, 0, 0, .75);
-    color: palevioletred;
-    padding: 10px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-}
-
-.ip-box2:hover {
-    background-color: #121212;
-    box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
 }
 
 .ip-box1 {
     position: fixed;
     top: 15px;
-    right: 60px;
-    width: 500px;
-    height: auto;
+    left: 60px;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 50px;
+    font-family: "Proto Mono", monospace;
+    font-size: 0.7rem;
 }
 
-.ip-box1:hover {
-    background-color: #121212;
-    box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
+.ip-box2 {
+    position: fixed;
+    top: 15px;
+    right: 60px;
+    background-color: rgba(0, 0, 0, .75);
+    color: palevioletred;
+    padding: 10px;
+    border-radius: 50px;
+    font-family: "Proto Mono", monospace;
+    font-size: 0.7rem;
 }
 
 .ip-address {
      margin: 0;
-     color: rebeccapurple;
-     font-style: 'Righteous', cursive;
-     font-size: 1.1rem;
-     font-weight: 500;
 }
 
 .ip-address:hover{
      color: #fc7a00;
      cursor: wait;
-}
-
-.entry_ip {
-    list-style-type: none;
-}
-
-.entry_ip li{
-    text-align: left;
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
-}
-
-.exit_ip {
-    list-style-type: none;
-}
-
-.exit_ip li{
-    text-align: left;
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
-}
-
-.nudges {
-    color: #e0ff05;
-    font-family: 'Proto Mono', cursive;
-    font-size: 0.9rem;    
-}
-
-.centered-container{
-    display: flex;
-    margin-left: 15px;
-    margin-bottom: 22px;
-
-}
-
-.square-refresh-button {
-    background-color: rgb(0,0,0);
-    opacity: 0.5;
-    border-radius: 5px;
-    border: none;
-    width: 35px; 
-    height: 35px; 
-    padding: 10 auto;
-    box-shadow: 0 0 10px #21325b, 0 0 20px #848884; 
-}
-
-.square-refresh-button i {
-    font-size: 17px;
-    color: #e0ff05;
-}
-
-.square-refresh-button:hover{
-    background-color: #36454F;
-    cursor: pointer;
-    opacity: 0.7;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4);
-    transition: background-color 0.3s;
-}
-
-.square-refresh-button i:hover{
-    color: #fc7a00;
-}
-
-.message {
-    font-family: "Righteous", cursive;
-    font-size: 32px;
-    text-align: center;
-    color: #e0ff05;
-    top: 40%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    opacity: 0.5;
-    white-space: nowrap; /* Prevent line breaks */
-    overflow: hidden; /* Hide overflowing text */
-    animation: typewriter 4s steps(150) alternate infinite, reverseTypewriter 4s steps(120) alternate infinite;
-}
-
-.message:hover {
-    color: #fc7a00;
-    cursor: default;
-    opacity: 0.7;
-    transition: color 0.3s;
-}
-
-@keyframes typewriter {
-    0% {
-        width: 0;
-        opacity: 0.7;
-    }
-    25% {
-        width: 25%;
-        opacity: 0.7;
-    }
-    50% {
-        width: 50%;
-        opacity: 0.7;
-    }
-    100% {
-        width: 100%;
-        opacity: 1;
-    }
-}
-
-@keyframes reverseTypewriter {
-    0% {
-        width: 100%;
-        opacity: 1;
-    }
-    25% {
-        width: 75%;
-        opacity: 1;
-    }
-    50% {
-        width: 50%;
-        opacity: 1;
-    }
-    75% {
-        width: 25%;
-        opacity: 0.7;
-    }
-    100% {
-        width: 0;
-        opacity: 0;
-    }
 }
