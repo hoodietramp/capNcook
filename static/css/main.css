@@ -69,8 +69,6 @@ form {
     margin-top: 130px;
 }
 
-
-
 .search-container {
     position: relative;
     display: flex;
@@ -365,7 +363,7 @@ input:hover {
     font-size: 0.9rem;    
 }
 
-.centered-container{
+/* .centered-container{
     display: flex;
     margin-left: 15px;
     margin-bottom: 22px;
@@ -398,14 +396,14 @@ input:hover {
 
 .square-refresh-button i:hover{
     color: #fc7a00;
-}
+} */
 
 .message {
     font-family: "Righteous", cursive;
     font-size: 32px;
     text-align: center;
     color: #e0ff05;
-    top: 40%;
+    top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -462,4 +460,24 @@ input:hover {
         width: 0;
         opacity: 0;
     }
+}
+
+.trilogy img {
+    width: auto; 
+    max-height: 150px;
+    margin-top: 30px; 
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 3%;
+    right: 0;
+    bottom: 40%;
+    margin: auto; 
+    opacity: 0.7;
+}
+
+.trilogy img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }

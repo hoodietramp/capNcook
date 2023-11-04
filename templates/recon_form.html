@@ -142,7 +142,7 @@
 
 <body>
     <h1 class="recon-title">Recon Report</h1>
-
+    
     <div class="centered-container">
         <form method="post">
             <div class="run-button-container">
@@ -150,7 +150,7 @@
                 <button id="run_button" submit">Run Recon</button>
             </div>
         </form>
-
+   
         <form method="GET" action="{{ url_for('refresh', functionality='recon') }}">
             <div class="refresh-button-container">
                 <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Refresh">
@@ -162,12 +162,12 @@
 
     <div class="recon-container">
         <ul> 
-            {% for recon_output in recon_outputs %}
+            
             <li class="recon-entry">
-                <h2 class="recon-header">-> {{ recon_output.header }}</h2>
-                <code class="recon-output">{{ "\n".join(recon_output.output) }}</code>
+                <h2 class="recon-header">-> Recon Outputs:</h2>
+                <code class="recon-output"></code>
             </li>
-            {% endfor %}
+
         </ul>
     </div>
     

@@ -56,6 +56,11 @@
             <span style="--cube:3"></span>
         </div>
     </div>
+    
+    <div class="trilogy">
+        <img src="{{ url_for('static', filename='/images/trilogy_logo.png') }}"
+    </div>
+
     <form action="/search" method="POST">
         <div class="search-container">
             <div class="tor-icon"></div>
@@ -65,14 +70,6 @@
             </button>
         </div>
     </form>
-
-    <div class="centered-container">
-    <form method="POST" action="{{ url_for('refresh_cache') }}">
-        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Refresh">
-            <i class="fas fa-sync-alt fa-spin"></i>
-        </button>
-    </form>
-    </div>
 
     <div class="link-container">
         <ul>

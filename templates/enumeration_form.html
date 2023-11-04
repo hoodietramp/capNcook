@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recon Report</title>
+    <title>Enumeration Report</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Righteous|Ubuntu+Mono&display=swap" rel="stylesheet">
 
     <style>
+        /* Reset some default styles */
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* Define the font face for Proto Mono */
         @font-face {
             font-family: 'Proto Mono';
             src: url('/static/fonts/Proto Mono Regular.ttf') format('truetype');
@@ -16,63 +21,85 @@
         }
 
         body {
+            margin: 0;
+            padding: 0;
             background-color: #B2BEB5; /* Light gray background */
-            color: #36454F; /* Dark gray text color */
             font-family: 'Ubuntu Mono', monospace;
-            margin: 0; /* Remove default margin */
+            color: #36454F; /* Dark gray text color */
         }
 
-        .recon-title {
-            font-family: 'Righteous';
+        h1 {
+            font-family: 'Righteous', cursive;
             text-align: center;
             padding: 20px;
             font-size: 2vw;
-            font-weight: 400;
-            color: #232B2B; /* Dark blue */
+            color: #21325b; /* Dark blue */
         }
 
-        .recon-container {
-            background-color: #FEFFFC;
-            max-width: 90%;
-            margin: 0 auto 20px;
-            padding: 20px 0;
-            border: 1px solid #848884; /* Gray border */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .domain {
+            background-color: #E5E4E2; /* Light gray background */
+            border: 1px solid #848884;
+            box-shadow:
+                0 0 10px #848884,
+                0 0 20px #848884; /* Grayish shadow effect */
             border-radius: 7px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4); /* Subtle shadow */
+            margin: 10px;
+            padding: 20px;
+            width: 100%;
+            position: relative;
+            cursor: default;
         }
 
-        .recon-container:hover {
-            background-color: #FAF9F6;
-            border: 1px solid #000000; /* Solid black border on hover */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4), 0px 0px 30px #21325b; /* Shadow effect on hover */
+        .domain:hover {
+            background-color: #FAF9F6; /* Light gray background on hover */
+            border: 1px solid #000000;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4), 0px 0px 30px #21325b;
             transition: border 0.3s, box-shadow 0.5s;
         }
 
-        .recon-title:hover {
-            color: #1B1B1B; /* Dark blue on hover */
-            text-shadow: #1B1B1B 0px 0px 1px;
-        }
-
-        .recon-entry {
-            list-style: none;
-            margin-bottom: 20px;
-            color: #36454F; /* Dark gray text color */
-            text-indent: 0.5em;
-        }
-
-        .recon-header {
-            font-family: 'Righteous', 'Ubuntu Mono', cursive;
-            font-weight: 200;
-            font-size: 1.2vw;
-            color: #21325b;
+        .domain h2 {
+            font-size: 18px;
             margin-bottom: 10px;
+            color: #0078d4; /* Dark blue */
+            font-family: 'Ubuntu Mono', monospace;
         }
 
-        .recon-output {
-            font-family: 'Ubuntu Mono', monospace;
+        .domain h2:hover{
+            color: #fc7a00;
+        }
+
+        .scan-output {
+            margin-top: 20px;
+            border: 0.5px solid #333333;
+            padding: 10px;
+            border-radius: 7px;
+            background-color: #fdfdfd;
+        }
+
+        .scan-output h3 {
             font-size: 16px;
+            margin-bottom: 5px;
+            color: #333333; /* Neon Green */
+        }
+
+        .scan-output pre {
             white-space: pre-wrap;
-            line-height: 1.5;
+            font-family: 'Ubuntu Mono', 'Proto Mono', monospace;
+            font-size: 16px;
+            color: #3e4144;
+            cursor: text;
+        }
+
+        .scan-output pre:hover {
+            color: #21325b;
+            transition: color 0.3s;
         }
 
         /* Centered button container */
@@ -81,8 +108,8 @@
             justify-content: space-between;
             margin-top: 20px;
             margin-bottom: 10px;
-            margin-right: 46%;
-            margin-left: 46%;
+            margin-right: 45%;
+            margin-left: 44%;
         }
 
         .square-refresh-button {
@@ -119,7 +146,7 @@
             margin-bottom: 20px;
             border-radius: 5px;
             border: none;
-            width: 120px; 
+            width: 170px; 
             height: 35px; 
             padding: 10 auto;
             box-shadow: 0 0 5px #21325b, 0 0 10px #848884;
@@ -136,22 +163,20 @@
             transition: background-color 0.3s;
             color: #ffb1b1;
         }
-
     </style>
 </head>
-
 <body>
-    <h1 class="recon-title">Recon Report</h1>
-
+    <h1>Enumeration Report</h1>
+    
     <div class="centered-container">
         <form method="post">
             <div class="run-button-container">
                 <input type="hidden" name="run" value="true">
-                <button id="run_button" submit">Run Recon</button>
+                <button id="run_button" submit">Run Dir Fuzz</button>
             </div>
         </form>
 
-        <form method="GET" action="{{ url_for('refresh', functionality='recon') }}">
+        <form method="GET" action="{{ url_for('refresh', functionality='enumeration') }}">
             <div class="refresh-button-container">
                 <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Refresh">
                     <i class="fas fa-sync-alt fa-spin"></i>
@@ -159,18 +184,18 @@
             </div>
         </form>
     </div>
-
-    <div class="recon-container">
-        <ul> 
-            {% for recon_output in recon_outputs %}
-            <li class="recon-entry">
-                <h2 class="recon-header">-> {{ recon_output.header }}</h2>
-                <code class="recon-output">{{ "\n".join(recon_output.output) }}</code>
-            </li>
-            {% endfor %}
-        </ul>
+    
+    <div class="container">
+        
+        <div class="domain">
+            <h2>Enumeration Results -> </h2>
+            <div class="scan-output feroxbuster-output">
+                <h3>Interesting Files Found: </h3>
+                <pre></pre>
+            </div>
+        </div>
+        
     </div>
     
 </body>
-
 </html>

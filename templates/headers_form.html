@@ -202,22 +202,40 @@
     </div>
 
     <div class="container">
-        {% for domain in domains %}
+        
         <div class="domain">
-            <h2>{{ domain.title }}</h2>
+            <h2>Onion Link</h2>
             <div class="img-container">
-                <img src="{{ url_for('static', filename=domain.screenshot) }}" alt="&#128465; No Screenshot Available">
+                <img src="" alt="&#128465; No Screenshot Available">
             </div>
             <div class="server-headers">
                 <h3>Server Headers</h3>
                 <ul>
-                    {% for header, value in domain.headers.items() %}
-                    <li><strong class="s_header">{{ header }}:</strong> <span class="s_value">{{ value }}</span></li>
-                    {% endfor %}
+                    
+                    <li><strong class="s_header">&lt;header&gt;:</strong> <span class="s_value">&lt;value&gt;</span></li>
+                    
                 </ul>
             </div>
         </div>
-        {% endfor %}
+        
+    </div>
+    <div class="container">
+        
+        <div class="domain">
+            <h2>Onion Link</h2>
+            <div class="img-container">
+                <img src="" alt="&#128465; No Screenshot Available">
+            </div>
+            <div class="server-headers">
+                <h3>Server Headers</h3>
+                <ul>
+                    
+                    <li><strong class="s_header">&lt;header&gt;:</strong> <span class="s_value">&lt;value&gt;</span></li>
+                    
+                </ul>
+            </div>
+        </div>
+        
     </div>
 </body>
 </html>

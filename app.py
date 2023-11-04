@@ -1,60 +1,37 @@
-from flask import Flask, render_template, request, session, jsonify
-from flask_caching import Cache
-from flask import redirect
+from flask import Flask, render_template, request, jsonify, url_for
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
 import os
+from flask import redirect
 from termcolor import colored
 import requests
 import subprocess
 import json
 import urllib.parse
-from tqdm import tqdm
 from time import sleep
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-import threading
 from stem import CircStatus
 from stem.control import Controller
 
 load_dotenv()
 
 # Really ignore this, I regret not deleting this - Hoodie
-os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
-print("\n")
+# os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
+# print("\n")
 os.system("echo 'Hidden Service Url -> hoodyfml6kphashjq4uxhu6fdro4rkmmtgwrvrqu7dlo32jitvqwabqd.onion'")
 
-#command = "curl https://api.ipify.org"
-#process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-#output, _ = process.communicate()
-
-#pub_ip = output.decode().strip()
-#print(colored("\nPublic IP: " + pub_ip, "yellow"))
-
-#command = "curl --socks5 '127.0.0.1:9050' https://api.ipify.org"
-#process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-#output, _ = process.communicate()
-
-#anon_ip = output.decode().strip()
-#print(colored("\nAnonymized IP: " + anon_ip, "red"))
-#print("\n")
-
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
-app.config['CACHE_TYPE'] = 'simple'
-cache = Cache(app)
-app.config['CACHE_DEFAULT_TIMEOUT'] = 3000
-
-app.secret_key = os.getenv('secret_key')
 
 def get_last_entry_exit_relay():
     entry_node = {}
     exit_node = {}
 
-    with Controller.from_port(address="127.0.0.1", port=9051) as controller:
+    with Controller.from_port(port=9051) as controller:
         try:
             controller.authenticate()
             controller.signal("NEWNYM")
 
-            print("All circuits have been flushed.")
-            
             last_circuit = None
 
             for circ in controller.get_circuits():
@@ -91,29 +68,57 @@ def get_last_entry_exit_relay():
                 print(f"Exit Node\n fingerprint: {exit_fp}\n nickname: {exit_nickname}\n address: {exit_address}")
                 print("=" * 50)
 
+                if entry_fp == exit_fp:
+                    # Entry and exit nodes are the same, flush circuits and rebuild
+                    print("Entry and exit nodes are the same. Rebuilding circuits...")
+                    controller.signal("NEWNYM")
+                    print("All circuits have been flushed and rebuilt!")
+
         except Exception as e:
             print(f"An error occurred: {e}")
 
     return entry_node, exit_node
 
 @app.route("/")
-
 def index():
+
     entry_node, exit_node = get_last_entry_exit_relay()
     return render_template("index.html", entry_node=entry_node, exit_node=exit_node)
 
-@app.route('/onion_check')
-
+@app.route('/onion_check', methods=['GET', 'POST'])
 def onion_check():
-    if 'onionCheck_results' in session:
-        results = session['onionCheck_results']
+
+    if request.method == 'POST':
+        # The "Run" button has been clicked; execute the backend code
+        proxies = {
+            'http': 'socks5h://127.0.0.1:9050',
+            'https': 'socks5h://127.0.0.1:9050'
+        }
+
+        with open('domains.txt', 'r') as file:
+            domains = file.readlines()
+
+        results = []
+
+        with ThreadPoolExecutor(max_workers=16) as executor:
+            futures = []
+
+            for url in domains:
+                url = url.strip('\n')
+                future = executor.submit(check_domain, url, proxies)
+                futures.append(future)
+
+            for future in as_completed(futures):
+                result = future.result()
+                results.append(result)
+
+        return render_template("onion_check.html", results=results)
+    
     else:
-        results = run_backend_onionCheck() 
-        session['onionCheck_results'] = results
+        # Display the form with the "Run" button
+        return render_template("onion_check_form.html")
 
-    return render_template("onion_check.html", results=results)
-
-def check_domain(url, proxies, results_lock, results):
+def check_domain(url, proxies):
     result = {}
     status = 'N/A'
     status_code = 'N/A'
@@ -130,166 +135,166 @@ def check_domain(url, proxies, results_lock, results):
         page_title = str(soup.title)
         page_title = page_title.replace('<title>', '')
         page_title = page_title.replace('</title>', '')
+        meta_description = soup.find("meta", attrs={"name": "description"})
+        page_description = meta_description.get("content") if meta_description else 'N/A'
+
         result['url'] = url
         result['status'] = 'Active'
         result['status_code'] = data.status_code
         result['page_title'] = page_title
+        result['page_description'] = page_description
 
     elif data == 'error':
         status = "Inactive"
         status_code = 'NA'
         page_title = 'NA'
+        page_description = 'NA'
         result['url'] = url
         result['status'] = 'Inactive'
         result['status_code'] = 'NA'
         result['page_title'] = 'NA'
+        result['page_description'] = 'NA'
 
-    with results_lock:
-        results.append(result)
+    return result
 
-    print("\n")
-    print(colored(f"{url}: {status}: {status_code}: {page_title}", "cyan"))
 
-def run_backend_onionCheck():
-    proxies = {
-        'http': 'socks5h://127.0.0.1:9050',
-        'https': 'socks5h://127.0.0.1:9050'
-    }
-
-    with open('domains.txt', 'r') as file:
-        domains = file.readlines()
-
-    results = []
-    results_lock = threading.Lock()
-
-    threads = []
-
-    for url in domains:
-        url = url.strip('\n')
-        thread = threading.Thread(target=check_domain, args=(url, proxies, results_lock, results))
-        threads.append(thread)
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
-    return results
-
-@app.route('/recon')
+@app.route('/recon', methods=['GET', 'POST'])
 def recon():
-    if 'recon_results' in session:
-        recon_outputs = session['recon_results']
-    else:
-        recon_outputs = run_backend_recon() 
-        session['recon_results'] = recon_outputs
 
-    return render_template("recon.html", recon_outputs=recon_outputs)
+    if request.method == 'POST':
+        # The "Run" button has been clicked; execute the backend code
+        def run_whois(onion_link, index):
+            command = f"sleep 0.5s; whois -h torwhois.com {onion_link} | tee recon_output/recon{index}.txt"
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-def run_backend_recon():
-    def run_whois(onion_link, index):
-        command = f"sleep 1s; whois -h torwhois.com {onion_link} | tee recon_output/recon{index}.txt"
-        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if result.returncode == 0:
+                output_lines = result.stdout.splitlines()
+                output_lines = output_lines[:-3]
+                output = '\n'.join(output_lines)
 
-        if result.returncode == 0:
-            output_lines = result.stdout.splitlines()
-            output_lines = output_lines[:-3]
-            output = '\n'.join(output_lines)
+            else:
+                output = f"Error: {result.stderr}"
 
-        else:
-            output = f"Error: {result.stderr}"
+            return output
 
-        return output
-
-    if not os.path.exists('recon_output'):
-        os.makedirs('recon_output')
+        if not os.path.exists('recon_output'):
+            os.makedirs('recon_output')
             
-    with open('domains.txt', 'r') as file:
-        onion_links = file.read().splitlines()
+        with open('domains.txt', 'r') as file:
+            onion_links = file.read().splitlines()
 
-    recon_outputs = []
+        recon_outputs = []
 
-    for index, onion_link in enumerate(onion_links, start=1):
-        whois_output = run_whois(onion_link, index)
+        for index, onion_link in enumerate(onion_links, start=1):
+            whois_output = run_whois(onion_link, index)
 
-        header_line = f"Output for {onion_link} (Domain {index}):\n"
-        recon_outputs.append({
-            'header': header_line,
-            'output': whois_output.splitlines(),
-        })
+            header_line = f"Output for {onion_link} (Domain {index}):\n"
+            recon_outputs.append({
+                'header': header_line,
+                'output': whois_output.splitlines(),
+            })
 
-    return recon_outputs
+        return render_template("recon.html", recon_outputs=recon_outputs)
 
-@app.route('/headers')
+    else:
+        # Display the form with the "Run" button
+        return render_template("recon_form.html")
+
+@app.route('/headers', methods=['GET', 'POST'])
 def headers():
 
-    cmd2 = "cat domains.txt 2>/dev/null | aquatone -out static/aqua_out -ports 80 -proxy socks5://127.0.0.1:9050 -http-timeout 30000 -screenshot-timeout 60000 2>/dev/null"
+    if  request.method == 'POST':
+        # The "Run" button has been clicked; execute the backend code
 
-    print(colored("\n[+] Capturing Screenshots...", "green"))
-    os.system(cmd2)
+        cmd2 = "cat domains.txt 2>/dev/null | aquatone -out static/aqua_out -ports 80 -proxy socks5://127.0.0.1:9050 -http-timeout 30000 -screenshot-timeout 60000 2>/dev/null"
+
+        print(colored("\n[+] Capturing Screenshots...", "green"))
+        os.system(cmd2)
     
-    def fetch_header(onion_url):
+        def fetch_header(onion_url):
+            proxies = {
+                'http': 'socks5h://127.0.0.1:9050',
+                'https': 'socks5h://127.0.0.1:9050'
+            }
         
-        proxies = {
-        'http': 'socks5h://127.0.0.1:9050',
-        'https': 'socks5h://127.0.0.1:9050'
-        }
-        
-        try:
-            onion_url = onion_url.strip()
-            screenshot_filename = f"{onion_url.replace('://', '__').replace('.onion', '_onion')}__da39a3ee5e6b4b0d.png"
-            screenshot_path = os.path.join(screenshot_dir, screenshot_filename)
+            try:
+                onion_url = onion_url.strip()
+                screenshot_filename = f"{onion_url.replace('://', '__').replace('.onion', '_onion')}__da39a3ee5e6b4b0d.png"
+                screenshot_path = os.path.join(screenshot_dir, screenshot_filename)
 
-            response = requests.get(onion_url, headers={'User-Agent': 'Mozilla/5.0'}, proxies=proxies)
-            if response.status_code == 200:
-                headers = {
-                    'title': onion_url,
-                    'headers': response.headers,
-                    'screenshot': screenshot_path,
-                }
+                response = requests.get(onion_url, headers={'User-Agent': 'Mozilla/5.0'}, proxies=proxies)
+                if response.status_code == 200:
+                    headers = {
+                        'title': onion_url,
+                        'headers': response.headers,
+                        'screenshot': screenshot_path,
+                    }
+                    domains.append(headers)
+            except Exception as e:
+                print(f"An error occurred for {onion_url}: {str(e)}")
 
-                # Print headers in terminal
-                # print(colored(f"\n{'-' * 40}\nHeaders for {onion_url}\n{'-' * 40}", "green"))
-                # for header, value in response.headers.items():
-                #     print(f"{header}: {value}")
-                # print("-" * 40)
+        domains = []
+        screenshot_dir = 'aqua_out/screenshots'
 
-                domains.append(headers)
-        except Exception as e:
-            print(f"An error occurred for {onion_url}: {str(e)}")
+        with open('domains.txt', 'r') as file:
+            onion_urls = file.read().splitlines()
 
-    domains = []
-    threads = []
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = []
 
-    with open('domains.txt', 'r') as file:
-        onion_urls = file.read().splitlines()
+            for onion_url in onion_urls:
+                future = executor.submit(fetch_header, onion_url)
+                futures.append(future)
 
-    screenshot_dir = 'aqua_out/screenshots'
+            for future in as_completed(futures):
+                # The result is not needed, as data is appended to the 'domains' list within the function.
+                pass
 
-    for onion_url in onion_urls:
-        thread = threading.Thread(target=fetch_header, args=(onion_url,))
-        threads.append(thread)
-        thread.start()
+        return render_template("headers.html", domains=domains)
 
-    for thread in threads:
-        thread.join()
-
-    return render_template("headers.html", domains=domains)
-
-@app.route('/enumeration')
-def enumeration():
-    if 'enumeration_results' in session:
-        enumeration_outputs = session['enumeration_results']
     else:
-        enumeration_outputs = run_backend_enum()
-        session['enumeration_results'] = enumeration_outputs
+        return render_template("headers_form.html")
 
-    return render_template("enumeration.html", enumeration_outputs=enumeration_outputs)
+@app.route('/enumeration', methods=['GET', 'POST'])
+def enumeration():
 
-# if not os.path.exists('nikto_log'):
-#     os.makedirs('nikto_log')
+    if  request.method == 'POST':
+        # The "Run" button has been clicked; execute the backend code
 
-if not os.path.exists('ferox_log'):
-        os.makedirs('ferox_log')
+        if not os.path.exists('ferox_log'):
+            os.makedirs('ferox_log')
+
+        with open('domains.txt', 'r') as file:
+            onion_links = file.read().splitlines()
+
+        enumeration_outputs = []
+
+        def run_feroxbuster_for_link(onion_link, index):
+            feroxbuster_output = run_feroxbuster(onion_link, index)
+            enumeration_outputs.append({
+                'onion_link': onion_link,
+                'feroxbuster_output': feroxbuster_output
+            })
+
+        # Create a ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = []
+
+            for index, onion_link in enumerate(onion_links, start=1):
+                # Submit tasks to the executor
+                future = executor.submit(run_feroxbuster_for_link, onion_link, index)
+                futures.append(future)
+
+            # Wait for all tasks to complete
+            for future in as_completed(futures):
+                # The result is not needed, as data is appended to the 'enumeration_outputs' list within the function.
+                pass
+
+        return render_template("enumeration.html", enumeration_outputs=enumeration_outputs)
+    
+    else:
+        # Display the form with the "Run" button
+        return render_template("enumeration_form.html")
 
 def run_feroxbuster(onion_link, index):
 
@@ -310,34 +315,6 @@ def run_feroxbuster(onion_link, index):
         log_file.write(filtered_output)
 
     return filtered_output
-
-def run_backend_enum():
-    with open('domains.txt', 'r') as file:
-        onion_links = file.read().splitlines()
-
-    enumeration_outputs = []
-
-    def run_feroxbuster_for_link(onion_link, index):
-        feroxbuster_output = run_feroxbuster(onion_link, index)
-        enumeration_outputs.append({
-            'onion_link': onion_link,
-            'feroxbuster_output': feroxbuster_output
-        })
-
-    # Create a list to hold thread objects
-    threads = []
-
-    for index, onion_link in enumerate(onion_links, start=1):
-        # Create a thread for each onion_link
-        thread = threading.Thread(target=run_feroxbuster_for_link, args=(onion_link, index))
-        threads.append(thread)
-        thread.start()
-
-    # Wait for all threads to complete
-    for thread in threads:
-        thread.join()
-
-    return enumeration_outputs
 
 @app.route("/search", methods=["GET", "POST"])
 
@@ -360,20 +337,10 @@ def search():
     print(colored("[+] Searching for top domains... \n", "yellow"))
     
     cmd1 = f"curl -s 'https://ahmia.fi/search/?q={encoded_keywords}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 15 > domains.txt 2>/dev/null"
-    
-    # cmd2 = "cat domains.txt 2>/dev/null | ./aquatone -out templates/aqua_out -proxy socks5://127.0.0.1:9050 -ports 80 -threads 50 -http-timeout 30000 -screenshot-timeout 10000 -resolution \"1920,1080\" 2>/dev/null"
 
-    total_iterations = 1
-    
-    # Use tqdm to create a progress bar for cmd1
-    custom_bar_format = "{desc} | {bar} | {percentage:3.0f}%"
-    with tqdm(total=total_iterations, unit="onions", desc="Indexing: ", dynamic_ncols=True, bar_format=custom_bar_format, colour="green") as pbar:
-        for i in range(total_iterations):
-            os.system(cmd1)  # Execute cmd1
-            pbar.update(1)   # Update the progress bar
-            print('\r', end='')
-
-    print(colored("\n[-] Done!", "blue"))
+    os.system(cmd1)
+            
+    print(colored("[-] Done!", "blue"))
 
     with open('domains.txt', 'r') as file:
         links = file.readlines()        
@@ -384,20 +351,44 @@ def search():
 
     return render_template("index.html", entry_node=entry_node, exit_node=exit_node, message=message, domain_links=domain_links)
 
-@app.route('/refresh_cache', methods=['POST'])
+@app.route('/run', methods=['POST'])
+def run():
+    referrer = request.referrer  # Get the referrer URL to determine the calling route
 
-def refresh_cache():
-    if 'onionCheck_results' in session:
-        del session['onionCheck_results']
-    if 'recon_results' in session:
-        del session['recon_results']
-    if 'headers_results' in session:
-        del session['headers_results']
-    if 'enumeration_results' in session:
-        del session['enumeration_results']
+    if "/onion_check" in referrer:
+        # Execute the onion_check backend code
+        results = onion_check_backend()
+        return render_template("onion_check.html", results=results)
+    elif "/recon" in referrer:
+        # Execute the recon backend code
+        results = recon_backend()
+        return render_template("recon.html", recon_outputs=recon_outputs)
+    elif "/headers" in referrer:
+        # Execute the headers backend code
+        results = headers_backend()
+        return render_template("headers.html", domains=domains)
+    elif "/enumeration" in referrer:
+        # Execute the enumeration backend code
+        results = enumeration_backend()
+        return render_template("enumeration.html", enumeration_outputs=enumeration_outputs)
 
+    # Handle the case where the referrer doesn't match any known route
     return redirect(request.referrer)
 
+@app.route('/refresh/<functionality>', methods=['GET'])
+def refresh(functionality):
+
+    if functionality == 'onion_check':
+        return redirect(url_for('onion_check'))
+    elif functionality == 'recon':
+        return redirect(url_for('recon'))
+    elif functionality == 'headers':
+        return redirect(url_for('headers'))
+    elif functionality == 'enumeration':
+        return redirect(url_for('enumeration'))
+    else:
+        # Handle the case where 'functionality' doesn't match any known value
+        return redirect(url_for('index'))
 
 if __name__ == "__main__":
 
