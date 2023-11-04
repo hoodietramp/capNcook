@@ -102,23 +102,25 @@
             transition: color 0.3s;
         }
 
-        .centered-container{
+        /* Centered button container */
+        .centered-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 20px;
-            margin-bottom: 20px;
-
+            margin-bottom: 10px;
+            margin-right: 45%;
+            margin-left: 44%;
         }
 
         .square-refresh-button {
-            background-color: rgb(0,0,0);
+            background-color: rgb(0, 0, 0);
             opacity: 0.5;
             border-radius: 5px;
             border: none;
-            width: 35px; 
-            height: 35px; 
+            width: 35px;
+            height: 35px;
             padding: 10 auto;
-            box-shadow: 0 0 10px #21325b, 0 0 20px #848884; 
+            box-shadow: 0 0 10px #21325b, 0 0 20px #848884;
         }
 
         .square-refresh-button i {
@@ -126,7 +128,7 @@
             color: #e0ff05;
         }
 
-        .square-refresh-button:hover{
+        .square-refresh-button:hover {
             background-color: #36454F;
             cursor: pointer;
             opacity: 0.7;
@@ -134,8 +136,32 @@
             transition: background-color 0.3s;
         }
 
-        .square-refresh-button i:hover{
+        .square-refresh-button i:hover {
             color: #fc7a00;
+        }
+        
+        #run_button{
+            background-color: #21325b;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            width: 170px; 
+            height: 35px; 
+            padding: 10 auto;
+            box-shadow: 0 0 5px #21325b, 0 0 10px #848884;
+            font-size: 21px;
+            color: #ffffff;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        #run_button:hover{
+            background-color: #212121;
+            cursor: pointer;
+            opacity: 0.9;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.3s;
+            color: #ffb1b1;
         }
     </style>
 </head>
@@ -143,11 +169,20 @@
     <h1>Enumeration Report</h1>
     
     <div class="centered-container">
-    <form method="POST" action="{{ url_for('refresh_cache') }}">
-        <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Re-run results">
-            <i class="fas fa-sync-alt fa-spin"></i>
-        </button>
-    </form>
+        <form method="post">
+            <div class="run-button-container">
+                <input type="hidden" name="run" value="true">
+                <button id="run_button" submit">Run Dir Fuzz</button>
+            </div>
+        </form>
+
+        <form method="GET" action="{{ url_for('refresh', functionality='enumeration') }}">
+            <div class="refresh-button-container">
+                <button type="submit" class="btn btn-warning square-refresh-button" data-toggle="tooltip" data-placement="bottom" title="Refresh">
+                    <i class="fas fa-sync-alt fa-spin"></i>
+                </button>
+            </div>
+        </form>
     </div>
     
     <div class="container">

@@ -4,9 +4,10 @@
     <title>Onion Check</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Righteous|Ubuntu+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/onion_check.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/onion_check_form.css') }}">
 </head>
 <body>
+    
     <h1>Onion Check Results</h1>
     
     <div class="centered-container">  
@@ -32,15 +33,15 @@
                 <th>Onion Title</th>
                 <th>Onion Description</th>
             </tr>
-            {% for result in results %}
+
             <tr>
-                <td>{{ result.url }}</td>
-                <td>{{ result.status }}</td>
-                <td>{{ result.status_code }}</td>
-                <td>{{ result.page_title }}</td>
-                <td>{{ result.page_description }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
-            {% endfor %}
+            
         </table>
         
 </body>
