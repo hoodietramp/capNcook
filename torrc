@@ -7,13 +7,14 @@ ControlSocket /run/tor/control GroupWritable RelaxDirModeCheck
 ControlSocketsGroupWritable 1
 SocksPort unix:/run/tor/socks WorldWritable
 SocksPort 9050
+SocksBindAddress 127.0.0.1
+SocksListenAddress 127.0.0.1
 
 CookieAuthentication 1
 CookieAuthFileGroupReadable 1
 CookieAuthFile /run/tor/control.authcookie
 
-
-#HiddenServiceDir /var/lib/tor/hidden_service/ 
+#HiddenServiceDir /var/lib/tor/capNcook/ 
 #HiddenServicePort 80 127.0.0.1:5000 
 #HiddenServiceVersion 3 
 #HiddenServiceMaxStreams 100 
