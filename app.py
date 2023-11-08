@@ -155,8 +155,10 @@ def check_domain(url, proxies):
         result['page_title'] = 'NA'
         result['page_description'] = 'NA'
 
-    return result
+    print("\n")
+    print(colored(f"{[status_code]}: {url}: {page_title} -> {status}", "cyan"))
 
+    return result
 
 @app.route('/recon', methods=['GET', 'POST'])
 def recon():
@@ -317,29 +319,63 @@ def run_feroxbuster(onion_link, index):
     return filtered_output
 
 @app.route("/search", methods=["GET", "POST"])
-
 def search():
     entry_node, exit_node = get_last_entry_exit_relay()
     keywords = request.form.get("keywords")
+    selected_engine = request.form.get("search_engine")
     
     if keywords is None:
-        message = f"capNcook|"
+        message = "capNcook|"
         return render_template("index.html", entry_node=entry_node, exit_node=exit_node, message=message)
-        # return {
+    
+    # return {
         #     'pub_ip': pub_ip,
         #     'anon_ip': anon_ip,
         #     'message': 'No search input provided in the request.',
         #     'domain_links': []
         # }
-    
+
     encoded_keywords = urllib.parse.quote(keywords.encode("utf-8"))
     
-    print(colored("[+] Searching for top domains... \n", "yellow"))
-    
-    cmd1 = f"curl -s 'https://ahmia.fi/search/?q={encoded_keywords}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 15 > domains.txt 2>/dev/null"
+    search_engines = {
+        "ahmia": "https://ahmia.fi/search?q={}",
+        "excavator": "http://2fd6cemt4gmccflhm6imvdfvli3nf7zn6rfrwpsy7uhxrgbypvwf5fad.onion/search/{}",
+        "torch": "http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion/search?query={}"
+        # "tor66": "http://tor66sewebgixwhcqfnp5inzp5x5uohhdy3kvtnyfxc2e5mxiuh34iid.onion/search?q={}"
+        # "torch": "http://xmh57jrzrnw6insl.onion/search?utf8=✓&q={}",
+        # "tor66": "http://tor66sezptuu2nt5t.onion/search?lang=en&q={}"
+    }
+    print(colored(f"\nSelected search engine: {selected_engine}", "cyan"))
 
-    os.system(cmd1)
-            
+    excavator_engine = "http://2fd6cemt4gmccflhm6imvdfvli3nf7zn6rfrwpsy7uhxrgbypvwf5fad.onion"
+    disgust_1 = "http://ccjbylumupbwqj6ucfjpo72o4dw5rs4blby24l3qtf33we3kx5zpk7yd.onion"
+    disgust_2 = "http://4qmgm3znqd2m6foedblw4llbz3vg6eosnwjzx23wlmahuf6e2dsiqmad.onion"
+    
+    if selected_engine not in search_engines:
+        selected_engine = "ahmia"
+        return "Invalid search engine selected, setting default to ahmia."
+    
+    search_url = search_engines[selected_engine].format(encoded_keywords)
+    print(search_url)
+    
+    print(colored("[+] Searching for top domains... \n", "yellow"))
+
+    encoded_keywords = urllib.parse.quote(keywords.encode("utf-8"))
+
+    if selected_engine == "ahmia":
+        search = f"curl -s '{search_url}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 15 > domains.txt 2>/dev/null"
+    elif selected_engine == "excavator":
+        excavator_search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 400 "<h6>SEARCH RESULTS</h6>" | grep -v "{excavator_engine}" | grep -v "{disgust_1}" | grep -v "{disgust_2}" | grep -oE "http[s]?://[^/]+\.onion" | head -n 15 > domains.txt 2>/dev/null'
+        search = excavator_search
+    elif selected_engine == "torch":
+        search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 800 "Your search" | grep -v "http://tordexu73joywapk2txdr54jed4imqledpcvcuf75qsas2gwdgksvnyd.onion" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | uniq -u | head -n 15 > domains.txt 2>/dev/null'
+    # elif selected_engine == "tor66":
+    #     search = f"curl -x socks5h://localhost:9050 -s --compressed '{search_url}' | grep -A 800 '<h3>Onion sites we found : </h3>g' 2>/dev/null | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | uniq | head -n 15 > domains.txt 2>/dev/null"
+    else:
+        search = "echo 'y0u n00b'"
+
+    os.system(search)
+
     print(colored("[-] Done!", "blue"))
 
     with open('domains.txt', 'r') as file:
@@ -348,7 +384,7 @@ def search():
     domain_links = [{'title': link.strip(), 'link': 'http://' + link.strip()} for link in links]
 
     message = f"Domains Listed for {keywords}|"
-
+    
     return render_template("index.html", entry_node=entry_node, exit_node=exit_node, message=message, domain_links=domain_links)
 
 @app.route('/run', methods=['POST'])

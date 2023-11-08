@@ -58,10 +58,10 @@
     </div>
     
     <div class="trilogy">
-        <img src="{{ url_for('static', filename='/images/trilogy_logo.png') }}"
+        <img src="{{ url_for('static', filename='/images/trilogy_logo.png') }}">
     </div>
 
-    <form action="/search" method="POST">
+    <!-- <form action="/search" method="POST">
         <div class="search-container">
             <div class="tor-icon"></div>
             <input type="text" id="keywords" name="keywords" placeholder="Search with TOR" required>
@@ -69,8 +69,24 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
+    </form> -->
+    <form action="/search" method="POST">
+        <div class="search-container">
+            <div class="tor-icon"></div>
+            <input type="text" id="keywords" name="keywords" placeholder="Search with TOR" required>
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+            <div class="search_select">
+                <select name="search_engine" id="search_engine">
+                    <option value="ahmia">ahmia</option>
+                    <option value="excavator">excavator</option>
+                    <option vlaue="tor66">torch</option>
+                </select>
+            </div>
+        </div>
     </form>
-
+    
     <div class="link-container">
         <ul>
             {% for domain in domain_links %}
@@ -90,6 +106,19 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Retrieve the selected search engine from local storage on page load
+        const selectedEngine = localStorage.getItem('selectedEngine');
+        
+        if (selectedEngine) {
+            document.getElementById('search_engine').value = selectedEngine;
+        }
+    
+        document.getElementById('search_engine').addEventListener('change', function () {
+            const selectedValue = this.value;
+            localStorage.setItem('selectedEngine', selectedValue);
+        });
+    </script>
 </body>
 
 </html>
