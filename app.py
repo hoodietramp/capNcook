@@ -169,7 +169,7 @@ def recon():
             command = f"sleep 0.5s; whois -h torwhois.com {onion_link} | tee recon_output/recon{index}.txt"
             result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-            if result.returncode == 0:
+            if result.returncode == 0:  
                 output_lines = result.stdout.splitlines()
                 output_lines = output_lines[:-3]
                 output = '\n'.join(output_lines)
@@ -340,11 +340,10 @@ def search():
     search_engines = {
         "ahmia": "https://ahmia.fi/search?q={}",
         "excavator": "http://2fd6cemt4gmccflhm6imvdfvli3nf7zn6rfrwpsy7uhxrgbypvwf5fad.onion/search/{}",
-        "torch": "http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion/search?query={}"
-        # "tor66": "http://tor66sewebgixwhcqfnp5inzp5x5uohhdy3kvtnyfxc2e5mxiuh34iid.onion/search?q={}"
-        # "torch": "http://xmh57jrzrnw6insl.onion/search?utf8=✓&q={}",
-        # "tor66": "http://tor66sezptuu2nt5t.onion/search?lang=en&q={}"
+        "torch": "http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion/search?query={}",
+        "deepsearch": "http://search7tdrcvri22rieiwgi5g46qnwsesvnubqav2xakhezv4hjzkkad.onion/result.php?search={}"
     }
+    
     print(colored(f"\nSelected search engine: {selected_engine}", "cyan"))
 
     excavator_engine = "http://2fd6cemt4gmccflhm6imvdfvli3nf7zn6rfrwpsy7uhxrgbypvwf5fad.onion"
@@ -369,8 +368,10 @@ def search():
         search = excavator_search
     elif selected_engine == "torch":
         search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 800 "Your search" | grep -v "http://tordexu73joywapk2txdr54jed4imqledpcvcuf75qsas2gwdgksvnyd.onion" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | uniq -u | head -n 15 > domains.txt 2>/dev/null'
-    # elif selected_engine == "tor66":
-    #     search = f"curl -x socks5h://localhost:9050 -s --compressed '{search_url}' | grep -A 800 '<h3>Onion sites we found : </h3>g' 2>/dev/null | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | uniq | head -n 15 > domains.txt 2>/dev/null"
+    elif selected_engine == "deepsearch":
+        # search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 800 "Last seen" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | uniq -u | awk \"{{print $1}}\" | sed -e "s/\'.*//g" | head -n 15 > domains.txt 2>/dev/null'
+        search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | head -n 40 | uniq > domains.txt 2>/dev/null'
+
     else:
         search = "echo 'y0u n00b'"
 

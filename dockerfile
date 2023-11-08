@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y \
     tor \
     proxychains4 \
     curl \
-    nikto \
     unzip \
     whois \
     jq \
@@ -32,6 +31,7 @@ WORKDIR /app
 
 # Copying web-{front-back}end to docker
 COPY . /app
+
 # Copying config files
 COPY torrc  /etc/tor/
 COPY proxychains4.conf  /etc/
