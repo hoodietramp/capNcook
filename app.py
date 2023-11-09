@@ -341,7 +341,10 @@ def search():
         "ahmia": "https://ahmia.fi/search?q={}",
         "excavator": "http://2fd6cemt4gmccflhm6imvdfvli3nf7zn6rfrwpsy7uhxrgbypvwf5fad.onion/search/{}",
         "torch": "http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion/search?query={}",
-        "deepsearch": "http://search7tdrcvri22rieiwgi5g46qnwsesvnubqav2xakhezv4hjzkkad.onion/result.php?search={}"
+        "deepsearch": "http://search7tdrcvri22rieiwgi5g46qnwsesvnubqav2xakhezv4hjzkkad.onion/result.php?search={}",
+        "underdir": "http://underdiriled6lvdfgiw4e5urfofuslnz7ewictzf76h4qb73fxbsxad.onion/?search={}",
+        "onionland": "https://onionland.io/search?q={}",
+        "grams": "http://grams64rarzrk7rzdaz2fpb7lehcyi7zrrf5kd6w2uoamp7jw2aq6vyd.onion/search?key={}"
     }
     
     print(colored(f"\nSelected search engine: {selected_engine}", "cyan"))
@@ -371,7 +374,12 @@ def search():
     elif selected_engine == "deepsearch":
         # search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 800 "Last seen" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | uniq -u | awk \"{{print $1}}\" | sed -e "s/\'.*//g" | head -n 15 > domains.txt 2>/dev/null'
         search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | head -n 40 | uniq > domains.txt 2>/dev/null'
-
+    elif selected_engine == "underdir":
+        search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | head -n 20 > domains.txt 2>/dev/null'
+    elif selected_engine == "onionland":
+        search = f'curl -s "{search_url}" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | head -n 40 | uniq > domains.txt 2>/dev/null'
+    elif selected_engine == "grams":
+        search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 800 "<ul>" | grep -oE "http[s]?://[^/]+\.onion" 2>/dev/null | head -n 15 > domains.txt 2>/dev/null'
     else:
         search = "echo 'y0u n00b'"
 
