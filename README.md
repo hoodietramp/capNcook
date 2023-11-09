@@ -64,7 +64,8 @@ The tool employs efficient multi-threading in Python to enhance performance 🚀
     rm LICENSE.txt README.md aquatone_linux_amd64_1.7.0.zip
     ```
 
-    - OR
+    OR
+
 
     ```bash
     cp ./aquatone /usr/bin/
