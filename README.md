@@ -80,12 +80,13 @@ The tool employs efficient multi-threading in Python to enhance performance 🚀
     chmod +x /usr/bin/feroxbuster
     rm x86_64-linux-feroxbuster.zip
     ```
-
-5. Run the application:
+5. Start Tor service:
 
     ```bash
     sudo systemctl start tor
     ```
+
+5. Run the application:
 
     ```bash
     flask run
