@@ -2,8 +2,8 @@
 
 ➡️
 <a href="https://github.com/hoodietramp/wiki">Documentation</a> |
-<a href="https://discord.gg/QhHe7nNRSU">Discord</a> |
-<a href="https://github.com/hoodietramp/capNcook/wiki/Installation">Installation Guide</a>  
+    <a href="https://discord.gg/QhHe7nNRSU">Discord</a> |
+        <a href="https://github.com/hoodietramp/capNcook/wiki/Installation">Installation Guide</a>  
 ⬅️
 
 <br>
@@ -12,9 +12,9 @@
 
 <p align="center">
   <a href="https://discord.gg/QhHe7nNRSU"><img alt="Discord" src="https://img.shields.io/discord/1009084433472700489"></a>
-  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="capNcook">
-<br>
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="capNcook">
 
+<br>
 **Disclaimer:** This tool is intended for educational and research purposes only. Unauthorized use of this tool is prohibited. Use it responsibly and at your own risk.
 </p>
 <hr>
@@ -101,12 +101,12 @@ Avoid running application as root user or with sudo, it'll throw this erro - [`s
 
 # 🔭 Usage Guidelines
 
-|🔍 **Search Page:**| Enter keywords and select a search engine to find onion domains using that search engine.|
-|-------------------|------------------------------------------------------------------------------------------|
-|🧅 **Onion Check:**| Click on `Run Onion Check` button to check the status of onion domains, including response codes, titles, and descriptions.|
-|🕵️ **Reconnaissance:**| Click on `Run Recon` button to perform WHOIS lookups on onion domains.|
-|🗡 **Headers:**| Click on `Run Headers` button to capture response headers and screenshots of onion domains.|
-|🪐 **Enumeration:**| Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
+|🔍 **Search Page:** | Enter keyword, Select search engine, index onion domains.|
+|------------------- |------------------------------------------------------------------------------------------|
+|🧅 **Onion Check:** | Click on `Run Onion Check` button to check the status of onion domains, including response codes, titles, and descriptions.|
+|🕵️ **Reconnaissance:** | Click on `Run Recon` button to perform WHOIS lookups on onion domains.|
+|🗡 **Headers:** | Click on `Run Headers` button to capture response headers and screenshots of onion domains.|
+|🪐 **Enumeration:** | Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
 
 # Screenshots
 
