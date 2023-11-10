@@ -19,7 +19,7 @@ load_dotenv()
 # Really ignore this, I regret not deleting this - Hoodie
 # os.system('curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs')
 # print("\n")
-os.system("echo 'Hidden Service Url -> hoodyfml6kphashjq4uxhu6fdro4rkmmtgwrvrqu7dlo32jitvqwabqd.onion'")
+os.system("echo 'hidden service ->' $(echo 'h00di3' | sudo -S cat /var/lib/tor/capNcook/hostname)")
 
 app = Flask(__name__, static_url_path='/static', template_folder='templates')
 
@@ -338,7 +338,7 @@ def search():
     encoded_keywords = urllib.parse.quote(keywords.encode("utf-8"))
     
     search_engines = {
-        "ahmia": "https://ahmia.fi/search?q={}",
+        "ahmia": "https://ahmia.fi/search/?q={}",
         "excavator": "http://2fd6cemt4gmccflhm6imvdfvli3nf7zn6rfrwpsy7uhxrgbypvwf5fad.onion/search/{}",
         "torch": "http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion/search?query={}",
         "deepsearch": "http://search7tdrcvri22rieiwgi5g46qnwsesvnubqav2xakhezv4hjzkkad.onion/result.php?search={}",

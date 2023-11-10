@@ -1,26 +1,63 @@
-# capNcook :shipit:
+<!-- # capNcook :shipit: -->
 
-**Disclaimer:** This tool is intended for educational and research purposes only. Unauthorized use of this tool is prohibited. Use it responsibly and at your own risk.
+<p align="center">
 
-## Overview
+➡️
+<a href="https://github.com/hoodietramp/wiki">Documentation</a> |
+<a href="https://discord.gg/QhHe7nNRSU">Discord</a> |
+<a href="https://github.com/hoodietramp/capNcook/wiki/Installation">Installation Guide</a>  
+⬅️
 
-capNcook is a Python Flask-based web application designed for dark web exploration. It utilizes Tor for anonymity and privacy, offering various features such as searching, retrieving response codes, TOR whois information, response headers, screenshots, and subdirectories of onion web-servers.
+<br>
+  <img src="static/images/pictures_for_readme/capNcook.png" alt="capNcook">
+</p>
+
+<br>
+
+> **Disclaimer:** This tool is intended for educational and research purposes only. Unauthorized use of this tool is prohibited. Use it responsibly and at your own risk.
+
+<br>
+
+# 🤔 What is this?
+
+capNcook is a Python Flask-based web application designed for dark web exploration. 
+
+![capNcook](static/images/pictures_for_readme/main.png)
+
+> "What about anonymity?"
+
+That's the point. You don't need to worry about it now, our tool utilizes tor for anonymity and privacy, identifies entry and exit nodes while esthablishing a tor circuit, 
+rebuild the tor circuit each time you run the tool and flush old circuits. 
 
 The tool employs efficient multi-threading in Python to enhance performance 🚀 
 
-## Features
+Live implementation of different tools and techniques to explore and do basic recon on hidden services over TOR
 
-1. **Search Over Tor:** Utilize different search engines on the dark web to find relevant onion domains.
+## 📊 capNcook : First of its kind
 
-2. **Anonymity and Privacy:** Identify entry and exit nodes to ensure anonymity and privacy when interacting with onion domains. The tool includes circuit rebuilding to maintain security.
+| **Name**                                   | ⚡ capNcook ⚡ |
+| ------------------------------------------ | -------------|
+| Unifies results from multi Dark-Web Search Engines | ✅           |
+| Identify Entry/Exit Nodes In Tor Circuit   | ✅           |
+| Multiple functionalities                   | ✅           |
+| Supports Multithreading                    | ✅           |
+| Easy to set up                             | ✅           |
+| Can run as tor hidden service              | ✅           |
+| Created for hackers by hackers             | ✅           |
 
-3. **TOR Whois Information:** Retrieve WHOIS information for onion domains.
+# ✨ Features
 
-4. **Response Headers:** Capture response headers of onion domains.
+- **Search Over Tor:** Utilize different search engines on the dark web to find relevant onion domains.
 
-5. **Screenshots:** Capture screenshots of onion websites.
+- **Anonymity and Privacy:** Identify entry and exit nodes to ensure anonymity and privacy when interacting with onion domains. The tool includes circuit rebuilding to maintain security.
 
-6. **Subdirectories:** Identify and list subdirectories of onion web-servers.
+- **TOR Whois Information:** Retrieve WHOIS information for onion domains.
+
+- **Response Headers:** Capture response headers of onion domains.
+
+- **Screenshots:** Capture screenshots of onion websites.
+
+- **Subdirectories:** Identify and list subdirectories of onion web-servers.
 
 ## Requirements
 
@@ -40,103 +77,93 @@ The tool employs efficient multi-threading in Python to enhance performance 🚀
 - Jq - process json data
 - Chromium [`sudo apt install chromium`]
 
-## Setup and Usage
+# 🎬 Getting Started
 
-1. Install necessities:
+If you're having trouble with setting up capNcook, [read this.](https://github.com/hoodietramp/capNcook/wiki/Common-Issues-&-Their-Solutions)
 
-    ```bash
-    sudo apt update && sudo apt upgrade -y ; sudo apt install python3 python3-pip tor chromium jq whois proxychains4 unzip
-    ```
+## ‼️ Important Links (Docs, Installation guide, Discord Support)
 
-2. Install the required dependencies using:
+| Installation Guide                                                          | Documentation                                             | Discord                                     |
+| --------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
+| 📖 [Installation Guide](https://github.com/hoodietramp/capNcook/wiki/Installation) | 📚 [Documentation](https://github.com/hoodietramp/capNcook/wiki) | 🦜 [Discord](https://discord.gg/QhHe7nNRSU) |
 
-    ```bash
-    pip3 install -r requirements.txt
-    ```
+## 🏃‍♀️Running capNcook
 
-3. Install AquaTone for screenshots:
+There are 2 ways to run Ciphey.
 
-    ```bash
-    wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip
-    unzip aquatone_linux_amd64_1.7.0.zip
-    mv aquatone /usr/bin/
-    chmod +x /usr/bin/aquatone
-    rm LICENSE.txt README.md aquatone_linux_amd64_1.7.0.zip
-    ```
+1. Run with flask `flask run`
+2. Normal way with python3 `python3 app.py`
 
-    OR
+![Gif showing capNcook running](/static/images/pictures_for_readme/running.gif)
 
+Avoid running application as root user or with sudo, it'll throw this erro - [`stem.SocketError: [Errno 111] Connection refused`]
 
-    ```bash
-    cp ./aquatone /usr/bin/
-    ```
+# 🔭 Usage Guidelines
 
-4. Install FeroxBuster for enumeration:
+|🔍 **Search Page:**| Enter keywords and select a search engine to find onion domains using that search engine.|
+|-------------------|-----------------------------------------------------------------|
+|🧅 **Onion Check:**| Click on `Run Onion Check` button to check the status of onion domains, including response codes, titles, and descriptions.|
+|-------------------|---------------------------------------------------------------------------------------|
+|🕵️ **Reconnaissance:**| Click on `Run Recon` button to perform WHOIS lookups on onion domains.|
+|----------------------|----------------------------------------|
+|🗡 **Headers:**| Click on `Run Headers` button to capture response headers and screenshots of onion domains.|
+|-------------|-----------------------------------------------------------|
+|🪐 **Enumeration:** Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
 
-    ```bash
-    wget https://github.com/epi052/feroxbuster/releases/download/v2.10.0/x86_64-linux-feroxbuster.zip
-    unzip x86_64-linux-feroxbuster.zip
-    mv feroxbuster /usr/bin/
-    chmod +x /usr/bin/feroxbuster
-    rm x86_64-linux-feroxbuster.zip
-    ```
-5. Start Tor service:
-
-    ```bash
-    sudo systemctl start tor
-    ```
-
-5. Run the application:
-
-    ```bash
-    flask run
-    ```
-    
-    OR
-
-    ```bash
-    python3 app.py
-    ```
-
-6. Access the tool in your web browser at `http://localhost:5000/`.
-
-## Screenshots
+# Screenshots
 
 - This is the main interface of tool, select your preferred search engine and you can search using keywords like you'd do over any normal search engine and it'll list domains related to the keyword.
 
-![main](static/images/main.png)
+![main](static/images/pictures_for_readme/main.png)
 
 - In `onion_check`, it'll grab the site's title and description, its status code, and based on the status code it'll filter it as active / inactive.
 
-![onion_check](static/images/onion_check.png)
+![onion_check](static/images/pictures_for_readme/onion_check.png)
 
 - In recon, it's doing recon using `torwhois` database to pull info regarding each listed onion domain if available.
 
-![recon](static/images/recon.png)
+![recon](static/images/pictures_for_readme/recon.png)
 
 - In headers, it's taking screenshots and grabbing server response headers, often reveals the technology or programming language used to build the web application via header like `X-Powered-By`, It may include information about the underlying frameworks or CMS (Content Management System) being used. The `Server` header typically indicates the software and version running on the server.
 
-![headers](static/images/headers.png)
+![headers](static/images/pictures_for_readme/headers.png)
 
 - In enumeration, it's doing basic directory fuzzing for each onion domain using the wordlist.txt
 
-![enumeration](static/images/enumeration.png)
+![enumeration](static/images/pictures_for_readme/enumeration.png)
 
-## Usage Guidelines
+## ⚗️ Contributions and Issues
 
-- **Search Page:** Enter keywords and select a search engine to find onion domains.
+Don't be afraid to contribute! We have many, many things you can do to help out. If you're trying to contribute but stuck, tag @hoodietramp, join our [discord](https://discord.gg/QhHe7nNRSU) server ✨
 
-- **Onion Check:** Check the status of onion domains, including response codes, titles, and descriptions.
+Contributions are welcome, but ensure they align with ethical use. If you encounter issues, please report them on the [GitHub repository](https://github.com/hoodietramp/capNcook/issues).
 
-- **Reconnaissance:** Perform WHOIS lookups on onion domains.
+By doing so, you'll get your name added to the README below and get to be apart of an ever-growing project
 
-- **Headers:** Capture response headers and screenshots of onion domains.
+## 💰 Financial Contributors
 
-- **Enumeration:** Use FeroxBuster to find hidden paths on onion domains.
+The contributions will be used to fund not only the future of capNcook and its authors, but also Cyber Security Club at the PIET College, Panipat, India.
 
-## Contributions and Issues
+## ✨ Contributors
 
-Contributions are welcome, but ensure they align with ethical use. If you encounter issues, please report them on the [GitHub repository](https://github.com/hoodietramp/capNcook).
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/holmes-py"><img src="https://avatars.githubusercontent.com/u/54495695?v=4" width="100px;" alt=""/><br /><sub><b>Mr. Holmes</b></sub></a><br /><a href="#design-holmes-py" title="Design">🎨</a> <a href="#maintenance-holmes-py" title="Maintenance">🚧</a> <a href="#mentoring-holmes-py" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/hoodietramp/capNcook/commits?author=holmes-py" title="Code">💻</a> <a href="#ideas-holmes-py" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://ryanmontgomery.me"><img src="https://avatars.githubusercontent.com/u/44453666?v=4" width="100px;" alt=""/><br /><sub><b>0day</b></sub></a><br /><a href="#design-0dayCTF" title="Design">🎨</a> <a href="#mentoring-0dayCTF" title="Mentoring">🧑‍🏫</a> <a href="#promotion-0dayCTF" title="Promotion">📣</a> <a href="#ideas-0dayCTF" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 ## Disclaimer
 
