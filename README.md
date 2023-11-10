@@ -1,5 +1,3 @@
-<!-- # capNcook :shipit: -->
-
 <p align="center">
 
 ➡️
@@ -12,11 +10,14 @@
   <img src="static/images/pictures_for_readme/capNcook.png" alt="capNcook">
 </p>
 
+<p align="center">
+  <a href="https://discord.gg/QhHe7nNRSU"><img alt="Discord" src="https://img.shields.io/discord/1009084433472700489"></a>
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="capNcook">
 <br>
 
-> **Disclaimer:** This tool is intended for educational and research purposes only. Unauthorized use of this tool is prohibited. Use it responsibly and at your own risk.
-
-<br>
+**Disclaimer:** This tool is intended for educational and research purposes only. Unauthorized use of this tool is prohibited. Use it responsibly and at your own risk.
+</p>
+<hr>
 
 # 🤔 What is this?
 
@@ -89,7 +90,7 @@ If you're having trouble with setting up capNcook, [read this.](https://github.c
 
 ## 🏃‍♀️Running capNcook
 
-There are 2 ways to run Ciphey.
+You can run capNcook -
 
 1. Run with flask `flask run`
 2. Normal way with python3 `python3 app.py`
@@ -101,14 +102,10 @@ Avoid running application as root user or with sudo, it'll throw this erro - [`s
 # 🔭 Usage Guidelines
 
 |🔍 **Search Page:**| Enter keywords and select a search engine to find onion domains using that search engine.|
-|-------------------|-----------------------------------------------------------------|
 |🧅 **Onion Check:**| Click on `Run Onion Check` button to check the status of onion domains, including response codes, titles, and descriptions.|
-|-------------------|---------------------------------------------------------------------------------------|
 |🕵️ **Reconnaissance:**| Click on `Run Recon` button to perform WHOIS lookups on onion domains.|
-|----------------------|----------------------------------------|
 |🗡 **Headers:**| Click on `Run Headers` button to capture response headers and screenshots of onion domains.|
-|-------------|-----------------------------------------------------------|
-|🪐 **Enumeration:** Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
+|🪐 **Enumeration:**| Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
 
 # Screenshots
 
@@ -154,7 +151,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/holmes-py"><img src="https://avatars.githubusercontent.com/u/54495695?v=4" width="100px;" alt=""/><br /><sub><b>Mr. Holmes</b></sub></a><br /><a href="#design-holmes-py" title="Design">🎨</a> <a href="#maintenance-holmes-py" title="Maintenance">🚧</a> <a href="#mentoring-holmes-py" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/hoodietramp/capNcook/commits?author=holmes-py" title="Code">💻</a> <a href="#ideas-holmes-py" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://ryanmontgomery.me"><img src="https://avatars.githubusercontent.com/u/44453666?v=4" width="100px;" alt=""/><br /><sub><b>0day</b></sub></a><br /><a href="#design-0dayCTF" title="Design">🎨</a> <a href="#mentoring-0dayCTF" title="Mentoring">🧑‍🏫</a> <a href="#promotion-0dayCTF" title="Promotion">📣</a> <a href="#ideas-0dayCTF" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/0dayCTF"><img src="https://avatars.githubusercontent.com/u/44453666?v=4" width="100px;" alt=""/><br /><sub><b>0day</b></sub></a><br /><a href="#mentoring-0dayCTF" title="Mentoring">🧑‍🏫</a> <a href="#promotion-0dayCTF" title="Promotion">📣</a> <a href="#ideas-0dayCTF" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
