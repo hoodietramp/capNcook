@@ -135,7 +135,7 @@ Don't be afraid to contribute! We have many, many things you can do to help out.
 
 Contributions are welcome, but ensure they align with ethical use. If you encounter issues, please report them on the [GitHub repository](https://github.com/hoodietramp/capNcook/issues).
 
-By doing so, you'll get your name added to the README below and get to be apart of an ever-growing project
+By doing so, you'll get your name added to the README below and get to be a part of an ever-growing project
 
 ## 💰 Financial Contributors
 
