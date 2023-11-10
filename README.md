@@ -97,8 +97,6 @@ You can run capNcook -
 
 ![Gif showing capNcook running](/static/images/pictures_for_readme/running.gif)
 
-Avoid running application as root user or with sudo, it'll throw this erro - [`stem.SocketError: [Errno 111] Connection refused`]
-
 # 🔭 Usage Guidelines
 
 | Name | ⚡ What does it do? ⚡|
