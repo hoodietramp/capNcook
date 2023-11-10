@@ -101,12 +101,12 @@ Avoid running application as root user or with sudo, it'll throw this erro - [`s
 
 # 🔭 Usage Guidelines
 
-|🔍 **Search Page:** | Enter keyword, Select search engine, index onion domains.|
-|------------------- |------------------------------------------------------------------------------------------|
-|🧅 **Onion Check:** | Click on `Run Onion Check` button to check the status of onion domains, including response codes, titles, and descriptions.|
-|🕵️ **Reconnaissance:** | Click on `Run Recon` button to perform WHOIS lookups on onion domains.|
-|🗡 **Headers:** | Click on `Run Headers` button to capture response headers and screenshots of onion domains.|
-|🪐 **Enumeration:** | Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
+|--------------------|------------------------------------------------------------------------------------------|
+|🔍 **Search Page** | Enter keyword, Select search engine, index onion domains.|
+|🧅 **Onion Check** | Click on `Run Onion Check` button to check the status of onion domains, including response codes, titles, and descriptions.|
+|🕵️ **Reconnaissance** | Click on `Run Recon` button to perform WHOIS lookups on onion domains.|
+|🗡 **Headers** | Click on `Run Headers` button to capture response headers and screenshots of onion domains.|
+|🪐 **Enumeration** | Click on `Run Dir Fuzz` button to run FeroxBuster against onion domains to find sub-directories/files.|
 
 # Screenshots
 
