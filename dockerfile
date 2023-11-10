@@ -53,9 +53,12 @@ RUN mv aquatone /usr/bin/
 RUN chmod +x /usr/bin/aquatone
 RUN rm LICENSE.txt README.md aquatone_linux_amd64_1.7.0.zip
 
+RUN service tor start
+RUN chmod 644 /run/tor/control.authcookie
+
 WORKDIR /app
 
 # Expose the port
 EXPOSE 5000
 
-ENTRYPOINT service tor start && python3 app.py
+ENTRYPOINT service tor restart && python3 app.py
