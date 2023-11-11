@@ -15,6 +15,76 @@ body {
     align-items: center;
 }
 
+@media only screen and (min-width: 1025px) {
+    .navbar {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ip-box1,
+    .ip-box2 {
+        width: 500px;
+    }
+
+    .link-container {
+        width: 50%;
+        left: 25%;
+    }
+}
+
+/* Styles for medium-sized screens */
+@media only screen and (max-width: 1024px) {
+    .navbar {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ip-box1,
+    .ip-box2 {
+        width: 80%;
+    }
+
+    .link-container {
+        width: 70%;
+        left: 15%;
+    }
+}
+
+/* Styles for smaller screens */
+@media only screen and (max-width: 768px) {
+    .navbar {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ip-box1,
+    .ip-box2 {
+        width: 90%;
+    }
+
+    .link-container {
+        width: 90%;
+        left: 5%;
+    }
+}
+
+/* Styles for very small screens (e.g., mobile) */
+@media only screen and (max-width: 480px) {
+    .navbar {
+        left: 5px;
+    }
+
+    .ip-box1,
+    .ip-box2 {
+        width: 100%;
+    }
+
+    .link-container {
+        width: 100%;
+        left: 0;
+    }
+}
+
 .navbar {
     background-color: rgb(0, 0, 0);
     position: absolute;
