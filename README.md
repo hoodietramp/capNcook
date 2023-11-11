@@ -54,9 +54,7 @@ Live implementation of different tools and techniques to explore and do basic re
 
 - **TOR Whois Information:** Retrieve WHOIS information for onion domains.
 
-- **Response Headers:** Capture response headers of onion domains.
-
-- **Screenshots:** Capture screenshots of onion websites.
+- **Screenshots:** Capture screenshots and grab response headers of .onion sites.
 
 - **Subdirectories:** Identify and list subdirectories of onion web-servers.
 
