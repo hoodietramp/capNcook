@@ -126,8 +126,8 @@ input:hover {
 
 .cube1 {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 25px;
+    left: 25px;
     width: 20px;
     height: 20px;
     transform-style: preserve-3d;
@@ -146,8 +146,8 @@ input:hover {
 
 .cube2 {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 25px;
+    right: 25px;
     width: 20px;
     height: 20px;
     transform-style: preserve-3d;
@@ -213,12 +213,12 @@ input:hover {
     filter: blur(5px);
     transform: translateZ(-40px);
     box-shadow:
-        0 0 10px rgba(224, 255, 5, 0.5),
-        0 0 20px rgba(224, 255, 5, 0.5),
-        0 0 30px rgba(252, 122, 0, 0.7),
-        0 0 40px rgba(252, 122, 0, 0.7),
-        0 0 50px rgb(247, 97, 182);
-}
+        0 0 10px rgba(0, 100, 100, 0.5), 
+        0 0 20px rgba(0, 100, 100, 0.5),   
+        0 0 30px rgba(139, 69, 19, 0.7),   
+        0 0 40px rgba(139, 69, 19, 0.7),    
+        0 0 50px rgb(72, 61, 139);          
+    }
 
 .link-container {
     background-color: rgba(0, 0, 0, 0.7);
@@ -289,14 +289,14 @@ input:hover {
 .ip-box2 {
     position: fixed;
     top: 15px;
-    left: 60px;
+    left: 10px;
     width: 500px;
     height: auto;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
     padding: 10px;
     border-radius: 15px;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
 }
 
 .ip-box2:hover {
@@ -307,16 +307,14 @@ input:hover {
 .ip-box1 {
     position: fixed;
     top: 15px;
-    right: 60px;
+    right: 10px;
     width: 500px;
     height: auto;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
     border-radius: 15px;
+    font-size: 0.7rem;
 }
 
 .ip-box1:hover {
@@ -328,7 +326,7 @@ input:hover {
      margin: 0;
      color: rebeccapurple;
      font-style: 'Righteous', cursive;
-     font-size: 1.1rem;
+     font-size: 1.2rem;
      font-weight: 500;
 }
 
@@ -362,41 +360,6 @@ input:hover {
     font-family: 'Proto Mono', cursive;
     font-size: 0.9rem;    
 }
-
-/* .centered-container{
-    display: flex;
-    margin-left: 15px;
-    margin-bottom: 22px;
-
-}
-
-.square-refresh-button {
-    background-color: rgb(0,0,0);
-    opacity: 0.5;
-    border-radius: 5px;
-    border: none;
-    width: 35px; 
-    height: 35px; 
-    padding: 10 auto;
-    box-shadow: 0 0 10px #21325b, 0 0 20px #848884; 
-}
-
-.square-refresh-button i {
-    font-size: 17px;
-    color: #e0ff05;
-}
-
-.square-refresh-button:hover{
-    background-color: #36454F;
-    cursor: pointer;
-    opacity: 0.7;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.4);
-    transition: background-color 0.3s;
-}
-
-.square-refresh-button i:hover{
-    color: #fc7a00;
-} */
 
 .message {
     font-family: "Righteous", cursive;
