@@ -131,7 +131,7 @@ select {
     border: none;
     background-color: rgba(0, 0, 0, 0.7);
     color: #b4b4b4;
-    font-family: 'Proto Mono', monospace;
+    font-family: 'Ubuntu mono', monospace;
     font-weight: 100;
     font-size: 0.9vw;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -467,7 +467,7 @@ select:hover{
     }
 
     select{
-        font-size: 1.8vw;
+        font-size: 1.9vw;
         font-family: 'Ubuntu Mono', monospace;
     }
 
