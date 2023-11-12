@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 @font-face {
     font-family: 'Proto Mono';
     src: url('/static/fonts/Proto Mono Regular.ttf') format('truetype');
@@ -13,23 +17,24 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .navbar {
-    background-color: rgb(0, 0, 0);
+    background-color:  rgb(0, 0, 0);
     position: absolute;
     top: 20px;  
-    left: 50;
-    padding: 10px 20px;
+    left: 50; 
+    padding: 10px 0px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 0.7vw;
 }
 
 .navbar-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.9rem;
 }
 
 .navbar-button {
@@ -52,21 +57,11 @@ body {
     border-radius: 15px;
 }
 
-.tor-icon {
-    width: 45px;
-    height: 60px;
-    background-image: url('/static/images/tor_logo.png');
-    background-size: cover;
-    background-position: center;
-    margin-right: 10px;
-    margin-top: -25px;
-}
-
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 130px;
+    margin: 7% 0 0 0;
 }
 
 .search-container {
@@ -81,12 +76,12 @@ input {
     border: none;
     margin-bottom: 20px;
     width: 400px;
-    height: 22px;
+    height: 42px;
     font-family: 'Ubuntu Mono', monospace;
     background-color: rgba(0, 0, 0, 0.7);
     color: wheat;
     font-weight: 100;
-    font-size: 1rem;
+    font-size: 1vw;
     font-stretch: extra-expanded;
     padding-right: 40px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -123,6 +118,32 @@ input:hover {
     box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
 }
 
+.search_select {
+    display: flex; 
+    align-items: center;
+    margin-left: 10px; 
+}
+
+select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #b4b4b4;
+    font-family: 'Proto Mono', monospace;
+    font-weight: 100;
+    font-size: 0.9vw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 150px;
+    height: 42px;
+    cursor: pointer;
+}
+
+select:hover{
+    background-color: #070707;
+    color: #ffd1d1;   
+}
 
 .cube1 {
     position: absolute;
@@ -209,32 +230,29 @@ input:hover {
     left: 0px;
     width: 20px;
     height: 20px;
-    background: #ffffff;
+    background: rebeccapurple;
     filter: blur(5px);
     transform: translateZ(-40px);
-    box-shadow:
-        0 0 10px rgba(0, 100, 100, 0.5), 
-        0 0 20px rgba(0, 100, 100, 0.5),   
-        0 0 30px rgba(139, 69, 19, 0.7),   
-        0 0 40px rgba(139, 69, 19, 0.7),    
-        0 0 50px rgb(72, 61, 139);          
-    }
+}
 
 .link-container {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     width: 50%;
-    position: fixed;
-    bottom: 20px;
-    left: 25%;
+    position: absolute;
+    bottom: 0;
+    margin: 0 0 1% 0;
     padding: 10px;
     max-height: 300px;
     overflow-y: scroll;
+    scroll-behavior: smooth;
+    font-size: 1vw;
 }
 
 .link-container::-webkit-scrollbar {
     width: 8px;
     height: 8px;
+    overflow: hidden;
 }
 
 .link-container::-webkit-scrollbar-thumb {
@@ -246,20 +264,6 @@ input:hover {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
 }
-
-.link-container {
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    width: 50%;
-    position: fixed;
-    bottom: 20px;
-    left: 25%;
-    padding: 10px;
-    max-height: 300px;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-}
-
 
 .link-container ul {
     list-style: square inside;
@@ -276,48 +280,46 @@ input:hover {
     color: #fff;
     text-decoration: none;
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 1.2rem;
 }
 
 .link-container a:hover {
-    font-family: 'Proto Mono', monospace;
-    font-size: 1rem;
+    font-family: 'Ubuntu Mono', monospace;
     color: #fc7a00;
     text-shadow: 0 0 10px #fc7a00, 0 0 20px #fc7a00, 0 0 30px #121212, 0 0 40px #222;
 }
 
-.ip-box2 {
+.entry_node {
     position: fixed;
     top: 15px;
     left: 10px;
-    width: 500px;
+    width: auto;
     height: auto;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
-    padding: 10px;
+    padding: 10px 20px 10px 0px;
     border-radius: 15px;
-    font-size: 0.7rem;
+    font-size: 0.7vw;
 }
 
-.ip-box2:hover {
+.entry_node:hover {
     background-color: #121212;
     box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
 }
 
-.ip-box1 {
+.exit_node {
     position: fixed;
     top: 15px;
     right: 10px;
-    width: 500px;
+    width: auto;
     height: auto;
     background-color: rgba(0, 0, 0, .75);
     color: palevioletred;
-    padding: 10px;
+    padding: 10px 20px 10px 0px;
     border-radius: 15px;
-    font-size: 0.7rem;
+    font-size: 0.7vw;
 }
 
-.ip-box1:hover {
+.exit_node:hover {
     background-color: #121212;
     box-shadow: 0 0 10px rgba(188, 0, 0, 0.9);
 }
@@ -326,8 +328,8 @@ input:hover {
      margin: 0;
      color: rebeccapurple;
      font-style: 'Righteous', cursive;
-     font-size: 1.2rem;
      font-weight: 500;
+     font-size: 1vw;
 }
 
 .ip-address:hover{
@@ -342,7 +344,6 @@ input:hover {
 .entry_ip li{
     text-align: left;
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
 }
 
 .exit_ip {
@@ -352,27 +353,25 @@ input:hover {
 .exit_ip li{
     text-align: left;
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
 }
 
 .nudges {
     color: #e0ff05;
     font-family: 'Proto Mono', cursive;
-    font-size: 0.9rem;    
 }
 
 .message {
     font-family: "Righteous", cursive;
-    font-size: 32px;
+    font-size: 1.5vw;
     text-align: center;
-    color: #e0ff05;
-    top: 50%;
+    color: #121212;
+    top: 30%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
     opacity: 0.5;
-    white-space: nowrap; /* Prevent line breaks */
-    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; 
+    overflow: hidden; 
     animation: typewriter 4s steps(150) alternate infinite, reverseTypewriter 4s steps(120) alternate infinite;
 }
 
@@ -424,31 +423,72 @@ input:hover {
         opacity: 0;
     }
 }
+  
+  @media screen and (max-width: 765px) {
+    .entry_node, .exit_node{
+        display: none;
+    }
+  }
+  
+  @media screen and (max-width: 1390px) {
+    .navbar {
+        top: 1%;
+        font-size: 2.1vw;
+        transform: scale(0.3); 
+        transition: transform 0.3s ease; 
+    }
 
-.search_select {
-    display: flex; 
-    align-items: center;
-    margin-left: 10px; 
-}
+    .entry_node{
+        font-size: 1vw;
+        width: 350px;
+        transform: scale(0.7);
+        transition: transform 0.3s ease;
+        top: 5px;
+        left: -30px;
+    }
 
-select {
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #b4b4b4;
-    font-family: 'Proto Mono', monospace;
-    font-weight: 100;
-    font-size: 1rem;
-    font-stretch: extra-expanded;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 150px;
-    height: 42px;
-    cursor: pointer;
-}
+    .exit_node{
+        font-size: 1vw;
+        width: 350px;
+        transform: scale(0.7);
+        transition: transform 0.3s ease;
+        top: 5px;
+        right: -30px;
+    }
 
-select:hover{
-    background-color: #070707;
-    color: #ffd1d1;   
-}
+    form{
+        margin: 10% 0 0 0;
+        transform: scale(0.5);
+        transition: transform 0.3s ease;
+    }
+
+    input{
+        font-size: 1.8vw;
+    }
+
+    select{
+        font-size: 1.8vw;
+        font-family: 'Ubuntu Mono', monospace;
+    }
+
+    select option{
+        font-size: 1vw;
+    }
+
+    .cube1, .cube2{
+        display: none;
+    }
+
+    .message{
+        top: 0%;
+        font-size: 1vw;
+    }
+
+    .link-container{
+        font-size: 1.2vw;
+        transform: scale(0.7);
+        transition: transform 0.3s ease;
+        max-height: 80px;
+        margin: 0% 0 20px 0;
+    } 
+  }

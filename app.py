@@ -81,7 +81,6 @@ def get_last_entry_exit_relay():
 
 @app.route("/")
 def index():
-
     entry_node, exit_node = get_last_entry_exit_relay()
     return render_template("index.html", entry_node=entry_node, exit_node=exit_node)
 
