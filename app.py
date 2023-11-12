@@ -364,7 +364,7 @@ def search():
     encoded_keywords = urllib.parse.quote(keywords.encode("utf-8"))
 
     if selected_engine == "ahmia":
-        search = f"curl -s '{search_url}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 15 > domains.txt 2>/dev/null"
+        search = f"curl -s '{search_url}' | grep -oE 'http[s]?://[^/]+\.onion' 2>/dev/null | head -n 20 | uniq > domains.txt 2>/dev/null"
     elif selected_engine == "excavator":
         excavator_search = f'curl -x socks5h://localhost:9050 -s "{search_url}" | grep -A 400 "<h6>SEARCH RESULTS</h6>" | grep -v "{excavator_engine}" | grep -v "{disgust_1}" | grep -v "{disgust_2}" | grep -oE "http[s]?://[^/]+\.onion" | head -n 15 > domains.txt 2>/dev/null'
         search = excavator_search
