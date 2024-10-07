@@ -1,7 +1,7 @@
 <p align="center">
 ➡️
 <a href="https://github.com/hoodietramp/wiki">Documentation</a> |
-    <a href="https://hackersarcade.com">Discord</a> |
+    <a href="https://discord.h00dy.me">345y Discord</a> |
         <a href="https://github.com/hoodietramp/capNcook/wiki/Installation">Installation Guide</a>  
  ⬅️
 <!-- 
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/QhHe7nNRSU"><img alt="Discord" src="https://img.shields.io/discord/1009084433472700489"></a>
+  <a href="https://discord.h00dy.me"><img alt="Discord" src="https://img.shields.io/discord/1009084433472700489"></a>
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="capNcook">
 
 <br>
@@ -82,9 +82,9 @@ If you're having trouble with setting up capNcook, [read this.](https://github.c
 
 ## ‼️ Important Links (Docs, Installation guide, Discord Support)
 
-| Installation Guide                                                          | Documentation                                             | Discord                                     |
+| Installation Guide                                                          | Documentation                                             | 345y Discord                                |
 | --------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
-| 📖 [Installation Guide](https://github.com/hoodietramp/capNcook/wiki/Installation) | 📚 [Documentation](https://github.com/hoodietramp/capNcook/wiki) | 🦜 [Discord](https://discord.gg/QhHe7nNRSU) |
+| 📖 [Installation Guide](https://github.com/hoodietramp/capNcook/wiki/Installation) | 📚 [Documentation](https://github.com/hoodietramp/capNcook/wiki) | 🦜 [Discord](https://discord.h00dy.me) |
 
 ## 🏃‍♀️Running capNcook
 
@@ -129,7 +129,7 @@ You can run capNcook -
 
 ## ⚗️ Contributions and Issues
 
-Don't be afraid to contribute! We have many, many things you can do to help out. If you're trying to contribute but stuck, tag @hoodietramp, join our [discord](https://discord.gg/QhHe7nNRSU) server ✨
+Don't be afraid to contribute! We have many, many things you can do to help out. If you're trying to contribute but stuck, tag @hoodietramp, join 345y discord server [discord](https://discord.h00dy.me) server ✨
 
 Contributions are welcome, but ensure they align with ethical use. If you encounter issues, please report them on the [GitHub repository](https://github.com/hoodietramp/capNcook/issues).
 
