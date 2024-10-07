@@ -1,7 +1,7 @@
 <p align="center">
 ➡️
 <a href="https://github.com/hoodietramp/wiki">Documentation</a> |
-    <a href="https://discord.gg/QhHe7nNRSU">Discord</a> |
+    <a href="https://hackersarcade.com">Discord</a> |
         <a href="https://github.com/hoodietramp/capNcook/wiki/Installation">Installation Guide</a>  
  ⬅️
 <!-- 
