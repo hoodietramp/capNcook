@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>capNcook</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/tor_logo.png')}}" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Righteous|Ubuntu+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
@@ -12,8 +13,8 @@
 
 <body>
 
-    <div class="ip-box2">
-        <p class="ip-address">Entry Node -> </p>
+    <div class="entry_node">
+        <p class="ip-address">Entry Node -> </p><br>
         <ul class="entry_ip">
             <li><span class='nudges'>Fingerprint: </span>{{ entry_node.fingerprint }}<br></li>
             <li><span class='nudges'>Nickname: </span>{{ entry_node.nickname }}<br></li>
@@ -21,8 +22,8 @@
         </ul>
     </div>
     
-    <div class="ip-box1">
-        <p class="ip-address">Exit Node -> </p>
+    <div class="exit_node">
+        <p class="ip-address">Exit Node -> </p><br>
         <ul class="exit_ip">
             <li><span class='nudges'>Fingerprint: </span>{{ exit_node.fingerprint }}<br></li>
             <li><span class='nudges'>Nickname: </span>{{ exit_node.nickname }}<br></li>
@@ -56,10 +57,6 @@
             <span style="--cube:3"></span>
         </div>
     </div>
-    
-    <div class="trilogy">
-        <img src="{{ url_for('static', filename='/images/trilogy_logo.png') }}">
-    </div>
 
     <!-- <form action="/search" method="POST">
         <div class="search-container">
@@ -72,7 +69,6 @@
     </form> -->
     <form action="/search" method="POST">
         <div class="search-container">
-            <div class="tor-icon"></div>
             <input type="text" id="keywords" name="keywords" placeholder="Search with TOR" required>
             <button type="submit" class="search-button">
                 <i class="fas fa-search"></i>
@@ -81,7 +77,7 @@
                 <select name="search_engine" id="search_engine">
                     <option value="ahmia">ahmia</option>
                     <option value="excavator">excavator</option>
-                    <option vlaue="tor66">torch</option>
+                    <option vlaue="torch">torch</option>
                     <option value="deepsearch">deepsearch</option>
                     <option vlaue="underdir">underdir</option>
                     <option value="onionland">onionland</option>
@@ -94,7 +90,7 @@
     <div class="link-container">
         <ul>
             {% for domain in domain_links %}
-            <li><a href="{{ 'http://' + domain.link.split('//')[-1] if domain.link.startswith('http://') or domain.link.startswith('https://') else domain.link }}"
+            <li><a href="{{ 'http://' + domain.link.split('//')[-1] if domain.link.startswith('http://') or domain.link.startswith('https://') else domain.link }}.ly"
                     target="_blank">{{ domain.title }}</a></li>
             {% if loop.index == 7 %}
         </ul>

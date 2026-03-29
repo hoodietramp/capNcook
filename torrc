@@ -7,9 +7,10 @@ ControlSocket /run/tor/control GroupWritable RelaxDirModeCheck
 ControlSocketsGroupWritable 1
 SocksPort unix:/run/tor/socks WorldWritable
 SocksPort 9050
-SocksBindAddress 127.0.0.1
-SocksListenAddress 127.0.0.1
+#SocksBindAddress 127.0.0.1
+#SocksListenAddress 127.0.0.1
 
+ControlPort 9051
 CookieAuthentication 1
 CookieAuthFileGroupReadable 1
 CookieAuthFile /run/tor/control.authcookie

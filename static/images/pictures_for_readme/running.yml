@@ -1,0 +1,267 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/h00dy/capNcook
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 159
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 36
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1100
+    content: "\e[?2004h\e[34;1m05:43:33 \e[0;97m\e[90;1mh00dy@kali \e[36;1mcapNcook ±\e[0;32m|master \e[0;31m✗\e[0;32m|\e[32;1m→ \e[0m"
+  - delay: 168
+    content: f
+  - delay: 159
+    content: l
+  - delay: 48
+    content: a
+  - delay: 96
+    content: s
+  - delay: 119
+    content: k
+  - delay: 153
+    content: ' '
+  - delay: 120
+    content: r
+  - delay: 112
+    content: u
+  - delay: 207
+    content: 'n'
+  - delay: 362
+    content: "\r\n\e[?2004l\r"
+  - delay: 718
+    content: '[sudo] password for h00dy: '
+  - delay: 41
+    content: "hidden service -> hoodyzll23aisgrgs4pe5vmogykyraotsgqh5zth4lykechngctt4mqd.onion\r\n * Debug mode: off\r\n"
+  - delay: 6
+    content: "\e[31m\e[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.\e[0m\r\n * Running on http://127.0.0.1:5000\r\n\e[33mPress CTRL+C to quit\e[0m\r\n"
+  - delay: 1999
+    content: "Circuit Information:\r\nEntry Node\r\n fingerprint: 3F092986E9B87D3FDA09B71FA3A602378285C77A\r\n nickname: NYCBUG1\r\n address: 66.111.2.16\r\nExit Node\r\n fingerprint: 1AAC19D892F84910AB94C45092241ABA3CFC4C89\r\n nickname: ForPrivacyNET\r\n address: 185.220.101.208\r\n==================================================\r\n"
+  - delay: 14
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:37] \"GET / HTTP/1.1\" 200 -\r\n"
+  - delay: 61
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:37] \"\e[36mGET /static/js/main.js HTTP/1.1\e[0m\" 304 -\r\n127.0.0.1 - - [10/Nov/2023 17:43:37] \"\e[36mGET /static/css/main.css HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 36
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:37] \"\e[36mGET /static/images/tor_logo.png HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 36
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:37] \"\e[36mGET /static/images/trilogy_logo.png HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 3805
+    content: "Circuit Information:\r\nEntry Node\r\n fingerprint: 3F092986E9B87D3FDA09B71FA3A602378285C77A\r\n nickname: NYCBUG1\r\n address: 66.111.2.16\r\nExit Node\r\n fingerprint: 1AAC19D892F84910AB94C45092241ABA3CFC4C89\r\n nickname: ForPrivacyNET\r\n address: 185.220.101.208\r\n==================================================\r\n"
+  - delay: 7
+    content: "\e[36m\r\nSelected search engine: ahmia\e[0m\r\nhttps://ahmia.fi/search/?q=new\r\n\e[33m[+] Searching for top domains... \r\n\e[0m\r\n"
+  - delay: 1396
+    content: "\e[34m[-] Done!\e[0m\r\n127.0.0.1 - - [10/Nov/2023 17:43:42] \"POST /search HTTP/1.1\" 200 -\r\n"
+  - delay: 74
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:42] \"\e[36mGET /static/css/main.css HTTP/1.1\e[0m\" 304 -\r\n127.0.0.1 - - [10/Nov/2023 17:43:42] \"\e[36mGET /static/js/main.js HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 24
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:42] \"\e[36mGET /static/images/tor_logo.png HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 35
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:43] \"\e[36mGET /static/images/trilogy_logo.png HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 2276
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:45] \"GET /onion_check HTTP/1.1\" 200 -\r\n"
+  - delay: 45
+    content: "127.0.0.1 - - [10/Nov/2023 17:43:45] \"\e[36mGET /static/css/onion_check_form.css HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 9906
+    content: "\r\n\r\n\e[36m[200]: http://g6ah7zsxot2jdbtjyu4vsjt4sxrsgfj6ivnxtmqadiqvywrjpezhiqqd.onion: Main page -> Active\e[0m\r\n"
+  - delay: 1046
+    content: "\r\n\r\n\e[36m[200]: http://l3tczdiiwoo63iwxty4lhs6p7eaxop5micbn7vbliydgv63x5zrrrfyd.onion: Privoxy - Home Page -> Active\e[0m\r\n"
+  - delay: 1193
+    content: "\r\n\r\n\e[36m[200]: http://5ekxbftvqg26oir5wle3p27ax3wksbxcecnm6oemju7bjra2pn26s3qd.onion: Debian -- The Universal Operating System  -> Active\e[0m\r\n\r\n\r\n\e[36m[200]: http://nv3x2jozywh63fkohn5mwp2d73vasusjixn3im3ueof52fmbjsigw6ad.onion: Comic Book Library -> Active\e[0m\r\n"
+  - delay: 127
+    content: "\r\n\r\n\e[36m[200]: http://escrowadprdr5cz7n43jhltqge2argliwzehawv7owd7zh4iv744nkad.onion: Tor Escrow -> Active\e[0m\r\n"
+  - delay: 281
+    content: "\r\n\r\n\e[36m[200]: http://allbitseyngdoe6caklbdkusoagzasvvztsif7lo4dhgwfeb5hip56yd.onion: KrakenBTC .:. #1 Bitcoin Market -> Active\e[0m\r\n"
+  - delay: 74
+    content: "\r\n\r\n\e[36m[200]: http://jamie3vkiwibfiwucd6vxijskbhpjdyajmzeor4mc4i7yopvpo4p7cyd.onion: JamieWeb -> Active\e[0m\r\n"
+  - delay: 164
+    content: "\r\n\r\n\e[36m[200]: http://quantumagvxei55qyvhlj3zljkjryzzvvgckynsfr4r7tqgmiufj75qd.onion: Quantum | Quantum’s (a.k.a. Guanzhong Chen) blog about coding, security, and other computer technology. -> Active\e[0m\r\n"
+  - delay: 93
+    content: "\r\n\r\n\e[36m[200]: http://allbitszswfelty4up43px3ifjc2uyq4l5cg4pn762n53fhv5dkdx4yd.onion: KrakenBTC .:. #1 Bitcoin Market -> Active\e[0m\r\n"
+  - delay: 42
+    content: "\r\n\r\n\e[36m[200]: http://rw2mk3grf2ee72ohgp6fefpm4k2cw4iqtefjtmknvzs3ojhno37nkeyd.onion: KrakenBTC .:. #1 Bitcoin Market -> Active\e[0m\r\n"
+  - delay: 976
+    content: "\r\n\r\n\e[36m[200]: http://k2htee64gyxc4zm7ssrd57zz4t5rbm2rhu4cdpfhdh7y4bkmmft7idad.onion: DSA -> Active\e[0m\r\n"
+  - delay: 594
+    content: "\r\n\r\n\e[36m[200]: http://allbits7fuboct7q6dzht5yfwwdwigmesy45fctinesvxwgithpn2fyd.onion: KrakenBTC .:. #1 Bitcoin Market -> Active\e[0m\r\n"
+  - delay: 2954
+    content: "\r\n\r\n\e[36m[200]: http://ciadotgov4sjwlzihbbgxnqg3xiyrg7so2r2o3lt5wz5ypk4sxyjstad.onion: <title data-react-helmet=\"true\">We are the Nation's first line of defense - CIA -> Active\e[0m\r\n"
+  - delay: 850
+    content: "\r\n\r\n\e[36m[200]: http://dc6rcegxudbr6ldfe54yfd35wimbnez3yceaqm7xolw2a4cek3zzveid.onion: Main page -> Active\e[0m\r\n"
+  - delay: 2987
+    content: "\r\n\r\n\e[36m[200]: http://ej3kv4ebuugcmuwxctx5ic7zxh73rnxt42soi3tdneu2c2em55thufqd.onion: Welcome | SecureDrop | Protecting Journalists and Sources -> Active\e[0m\r\n"
+  - delay: 11
+    content: "127.0.0.1 - - [10/Nov/2023 17:44:06] \"POST /onion_check HTTP/1.1\" 200 -\r\n"
+  - delay: 40
+    content: "127.0.0.1 - - [10/Nov/2023 17:44:06] \"\e[36mGET /static/css/onion_check.css HTTP/1.1\e[0m\" 304 -\r\n"
+  - delay: 2635
+    content: "127.0.0.1 - - [10/Nov/2023 17:44:09] \"GET /headers HTTP/1.1\" 200 -\r\n"
+  - delay: 943
+    content: "\e[32m\r\n[+] Capturing Screenshots...\e[0m\r\n"
+  - delay: 64
+    content: "\e[1maquatone v1.7.0 started at 2023-11-10T17:44:10+05:30\r\n\r\n\e[0m"
+  - delay: 366
+    content: "\e[1mTargets    : 15\r\n\e[0m\e[1mThreads    : 16\r\n\e[0m\e[1mPorts      : 80\r\n\e[0m\e[1mOutput dir : static/aqua_out\r\n\r\n\e[0m"
+  - delay: 4987
+    content: "http://escrowadprdr5cz7n43jhltqge2argliwzehawv7owd7zh4iv744nkad.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 227
+    content: "http://k2htee64gyxc4zm7ssrd57zz4t5rbm2rhu4cdpfhdh7y4bkmmft7idad.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 186
+    content: "http://5ekxbftvqg26oir5wle3p27ax3wksbxcecnm6oemju7bjra2pn26s3qd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 137
+    content: "http://jamie3vkiwibfiwucd6vxijskbhpjdyajmzeor4mc4i7yopvpo4p7cyd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 525
+    content: "http://nv3x2jozywh63fkohn5mwp2d73vasusjixn3im3ueof52fmbjsigw6ad.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 156
+    content: "http://allbitseyngdoe6caklbdkusoagzasvvztsif7lo4dhgwfeb5hip56yd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 685
+    content: "http://l3tczdiiwoo63iwxty4lhs6p7eaxop5micbn7vbliydgv63x5zrrrfyd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 368
+    content: "http://allbits7fuboct7q6dzht5yfwwdwigmesy45fctinesvxwgithpn2fyd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 1733
+    content: "http://quantumagvxei55qyvhlj3zljkjryzzvvgckynsfr4r7tqgmiufj75qd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 91
+    content: "http://allbitszswfelty4up43px3ifjc2uyq4l5cg4pn762n53fhv5dkdx4yd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 259
+    content: "http://rw2mk3grf2ee72ohgp6fefpm4k2cw4iqtefjtmknvzs3ojhno37nkeyd.onion: \e[32m200 OK\e[0m"
+  - delay: 13
+    content: "\r\n"
+  - delay: 1264
+    content: "http://dc6rcegxudbr6ldfe54yfd35wimbnez3yceaqm7xolw2a4cek3zzveid.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 2160
+    content: "http://g6ah7zsxot2jdbtjyu4vsjt4sxrsgfj6ivnxtmqadiqvywrjpezhiqqd.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 83
+    content: "http://l3tczdiiwoo63iwxty4lhs6p7eaxop5micbn7vbliydgv63x5zrrrfyd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 1226
+    content: "http://k2htee64gyxc4zm7ssrd57zz4t5rbm2rhu4cdpfhdh7y4bkmmft7idad.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 707
+    content: "http://jamie3vkiwibfiwucd6vxijskbhpjdyajmzeor4mc4i7yopvpo4p7cyd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 571
+    content: "http://escrowadprdr5cz7n43jhltqge2argliwzehawv7owd7zh4iv744nkad.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 74
+    content: "http://quantumagvxei55qyvhlj3zljkjryzzvvgckynsfr4r7tqgmiufj75qd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 569
+    content: "http://ciadotgov4sjwlzihbbgxnqg3xiyrg7so2r2o3lt5wz5ypk4sxyjstad.onion: \e[32m200 OK\e[0m\r\n"
+  - delay: 2866
+    content: "http://allbitszswfelty4up43px3ifjc2uyq4l5cg4pn762n53fhv5dkdx4yd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 1514
+    content: "http://allbitseyngdoe6caklbdkusoagzasvvztsif7lo4dhgwfeb5hip56yd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 5060
+    content: "http://5ekxbftvqg26oir5wle3p27ax3wksbxcecnm6oemju7bjra2pn26s3qd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 2490
+    content: "http://allbits7fuboct7q6dzht5yfwwdwigmesy45fctinesvxwgithpn2fyd.onion: \e[32mscreenshot successful\e[0m\r\n"
+  - delay: 2582
+    content: ^C
+  - delay: 357
+    content: ^C
+  - delay: 304
+    content: "^CException ignored in: <module 'threading' from '/usr/lib/python3.11/threading.py'>\r\nTraceback (most recent call last):\r\n  File \"/usr/lib/python3.11/threading.py\", line 1560, in _shutdown\r\n    atexit_call()\r\n  File \"/usr/lib/python3.11/concurrent/futures/thread.py\", line 31, in _python_exit\r\n"
+  - delay: 5
+    content: "    t.join()\r\n  File \"/usr/lib/python3.11/threading.py\", line 1119, in join\r\n    self._wait_for_tstate_lock()\r\n  File \"/usr/lib/python3.11/threading.py\", line 1139, in _wait_for_tstate_lock\r\n    if lock.acquire(block, timeout):\r\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nKeyboardInterrupt: \r\n"
+  - delay: 161
+    content: "\e[?2004h\e[34;1m05:44:42 \e[0;97m\e[90;1mh00dy@kali \e[36;1mcapNcook ±\e[0;32m|master \e[0;31m✗\e[0;32m|\e[32;1m→ \e[0m"
+  - delay: 272
+    content: "\e[?2004l\r\r\nlogout\r\n"

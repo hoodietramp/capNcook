@@ -1,0 +1,13 @@
+.env
+domains.txt
+poc.py
+__pycache__/
+torbulkexitlist
+*.state
+recon_output/
+ferox_log/
+static/screenshots/
+gowitness.sqlite3
+gowitness.*.sqlite3
+screenshots
+
